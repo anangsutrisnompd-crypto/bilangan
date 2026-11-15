@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Petualangan Ninja: Misi Penyelamat Harta Karun</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:#0d1024;color:#fff;overflow:hidden;font-family:"Baloo 2","Nunito","Trebuchet MS","Segoe UI",system-ui,sans-serif;user-select:none;-webkit-user-select:none}
+#cv{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:min(100vw,calc(100vh*16/9));height:min(100vh,calc(100vw*9/16));background:#123;display:block;touch-action:none}
+@media (orientation:portrait){#cv{top:0;transform:translateX(-50%)}}
+.ov{position:fixed;inset:0;display:none;padding:14px;overflow:auto;z-index:20;background:rgba(10,12,34,.62)}
+.ov.on{display:flex}
+.ov>*{margin:auto}
+#dlg>*{margin:auto auto 0}
+#end>*{margin:0 auto auto}
+@media (max-height:480px){.logo .t1{font-size:34px}.logo .t2{font-size:16px;margin-top:4px}.logo .t3{margin:3px 0 0}.mbox .btn{padding:7px 16px;margin:3px;font-size:15px}#nm{margin:5px 0 2px;padding:5px 10px;font-size:15px}.card{padding:12px 16px}}
+.card{background:linear-gradient(160deg,#fffdf4,#ffe9bd);color:#3b2a14;border-radius:22px;border:4px solid #b9741f;box-shadow:0 10px 0 #7d4a10,0 22px 40px rgba(0,0,0,.5);padding:20px 22px;width:min(640px,100%);max-height:100%;overflow:auto}
+.card h2{margin:0 0 10px;font-size:clamp(20px,4.6vw,28px);color:#b3440b;text-align:center;letter-spacing:.5px}
+.card p{margin:8px 0;font-size:clamp(14px,3.4vw,17px);line-height:1.45}
+.btn{font:inherit;font-weight:800;font-size:clamp(15px,3.6vw,19px);color:#fff;background:linear-gradient(#ffa63d,#f0700c);border:0;border-radius:14px;padding:11px 20px;margin:5px;cursor:pointer;box-shadow:0 5px 0 #a8480a,0 8px 14px rgba(0,0,0,.3);transition:transform .06s}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 #a8480a}
+.btn.b2{background:linear-gradient(#4fc3ff,#1f86d6);box-shadow:0 5px 0 #135a94,0 8px 14px rgba(0,0,0,.3)}
+.btn.b3{background:linear-gradient(#9aa3b5,#69718a);box-shadow:0 5px 0 #454b60,0 8px 14px rgba(0,0,0,.3)}
+.btn.b4{background:linear-gradient(#ff6b6b,#d92f2f);box-shadow:0 5px 0 #8f1717,0 8px 14px rgba(0,0,0,.3)}
+.row{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:4px;margin-top:10px}
+/* menu */
+#menu{background:linear-gradient(rgba(10,12,34,.15),rgba(10,12,34,.7))}
+.logo{text-align:center}
+.logo .t1{font-size:clamp(34px,9vw,74px);font-weight:900;line-height:1;color:#ffd23f;-webkit-text-stroke:2px #7a2c00;text-shadow:0 5px 0 #c2530a,0 9px 0 #7a2c00,0 14px 22px rgba(0,0,0,.6);letter-spacing:1px}
+.logo .t2{font-size:clamp(16px,4.2vw,30px);font-weight:900;color:#fff;text-shadow:0 3px 0 #1f4fa8,0 6px 12px rgba(0,0,0,.6);margin-top:8px;letter-spacing:2px}
+.logo .t3{font-size:clamp(12px,3vw,17px);color:#ffe9bd;margin:8px 0 2px;font-style:italic;text-shadow:0 2px 4px #000}
+.logo .t4{font-size:clamp(11px,2.6vw,14px);color:#cfe6ff;text-shadow:0 2px 4px #000}
+.mbox{display:flex;flex-direction:column;align-items:center;gap:2px;width:min(520px,100%)}
+#nm{font:inherit;font-size:17px;font-weight:700;text-align:center;border-radius:12px;border:3px solid #b9741f;padding:8px 12px;margin:10px 0 4px;width:min(280px,90%);background:#fffdf4;color:#3b2a14;user-select:text;-webkit-user-select:text}
+.mbox .btn{width:min(300px,92%)}
+/* dialog */
+#dlg{background:transparent;padding:10px}
+.dbox{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(#fffdf4,#ffeccb);color:#3b2a14;border:4px solid #b9741f;border-radius:18px;box-shadow:0 8px 24px rgba(0,0,0,.55);padding:12px 14px;width:min(820px,100%)}
+#dpic{width:72px;height:72px;border-radius:14px;background:#bfe6ff;border:3px solid #b9741f;flex:none}
+.dtx{flex:1;min-width:0}
+#dwho{font-weight:900;color:#b3440b;font-size:clamp(15px,3.6vw,19px)}
+#dtext{font-size:clamp(14px,3.4vw,18px);line-height:1.4;min-height:3.2em;margin:2px 0 6px}
+.dbtn{display:flex;justify-content:flex-end;gap:6px;flex-wrap:wrap}
+.dbtn .btn{padding:7px 14px;font-size:clamp(13px,3.2vw,16px);margin:0}
+/* map */
+#map{background:radial-gradient(circle at 50% 20%,#3d7fd1,#16224f 70%)}
+.mapc{width:min(900px,100%);max-height:100%;overflow:auto;text-align:center}
+.mapc h2{margin:4px 0 2px;font-size:clamp(22px,5vw,34px);color:#ffd23f;text-shadow:0 3px 0 #7a2c00}
+.mapc .sub{font-size:clamp(12px,3vw,15px);color:#d6e8ff;margin-bottom:10px}
+.nodes{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;perspective:800px}
+.node{font:inherit;color:#fff;width:158px;border:0;border-radius:18px;padding:10px 8px 12px;cursor:pointer;position:relative;transform:rotateX(14deg);box-shadow:0 10px 0 rgba(0,0,0,.35),0 18px 22px rgba(0,0,0,.4);transition:transform .15s}
+.node:nth-child(even){margin-top:26px}
+.node:hover{transform:rotateX(0) translateY(-4px)}
+.node.lock{filter:grayscale(1) brightness(.6);cursor:not-allowed}
+.node .num{font-size:13px;font-weight:800;opacity:.9}
+.node .nmv{font-size:16px;font-weight:900;line-height:1.15;min-height:38px;display:flex;align-items:center;justify-content:center}
+.node .gem{width:34px;height:34px;margin:6px auto;transform:rotate(45deg);border-radius:7px;border:3px solid rgba(255,255,255,.85);box-shadow:0 0 16px currentColor,inset -5px -5px 0 rgba(0,0,0,.2),inset 4px 4px 0 rgba(255,255,255,.45)}
+.node .st{font-size:12.5px;font-weight:700}
+.node .stars{font-size:18px;letter-spacing:2px;color:#ffe45c;text-shadow:0 2px 0 rgba(0,0,0,.4);min-height:22px}
+.maptot{margin:14px 0 4px;font-weight:800;font-size:clamp(14px,3.4vw,18px)}
+/* question */
+#qp .card{width:min(700px,100%)}
+.qhead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+.qhead .ttl{font-weight:900;font-size:clamp(17px,4.2vw,24px);color:#b3440b}
+#qprog{font-weight:800;font-size:13px;background:#b9741f;color:#fff;border-radius:99px;padding:3px 12px;white-space:nowrap}
+.chest{width:44px;height:36px;flex:none;position:relative}
+.chest i{position:absolute;left:0;right:0;border:3px solid #6b3d0c;background:linear-gradient(#d9892b,#a85e14)}
+.chest i:first-child{top:0;height:15px;border-radius:12px 12px 0 0;transform:rotate(-14deg);transform-origin:left bottom}
+.chest i:last-child{bottom:0;height:22px;border-radius:0 0 6px 6px}
+.chest::after{content:"";position:absolute;left:8px;right:8px;top:6px;height:12px;background:radial-gradient(#fff7b0,rgba(255,220,80,0));}
+#qtext{font-size:clamp(15px,3.7vw,19px);font-weight:700;line-height:1.4;margin:6px 0}
+#qtab{border-collapse:collapse;margin:8px auto;font-size:clamp(14px,3.4vw,17px);min-width:60%}
+#qtab th{background:#b9741f;color:#fff;padding:5px 14px}
+#qtab td{background:#fff;border:2px solid #e2c48c;padding:4px 14px;text-align:center;font-weight:700}
+#qopts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+@media (max-width:520px){#qopts{grid-template-columns:1fr}}
+.opt{font:inherit;font-weight:800;font-size:clamp(14px,3.5vw,17px);text-align:left;color:#3b2a14;background:#fff;border:3px solid #d8a24e;border-radius:14px;padding:10px 12px;cursor:pointer;box-shadow:0 4px 0 #c9953f}
+.opt:hover{background:#fff6da}
+.opt.ok{background:#c8f7c5;border-color:#2e9e3e;box-shadow:0 4px 0 #2e9e3e}
+.opt.no{background:#ffd3d3;border-color:#d13b3b;box-shadow:0 4px 0 #d13b3b;opacity:.75}
+.opt:disabled{cursor:default}
+#qfb{margin-top:10px;border-radius:14px;padding:10px 12px;font-size:clamp(14px,3.4vw,17px);line-height:1.4;display:none}
+#qfb.good{display:block;background:#dbf8d8;border:3px solid #2e9e3e}
+#qfb.try{display:block;background:#fff1c7;border:3px solid #e0a100}
+#qfb.bad{display:block;background:#ffe0e0;border:3px solid #d13b3b}
+#qfb b.big{display:block;font-size:1.25em;font-weight:900}
+.pop{animation:pop .35s}
+@keyframes pop{0%{transform:scale(.6)}70%{transform:scale(1.08)}100%{transform:scale(1)}}
+/* stats */
+.stat{width:100%;border-collapse:collapse;font-size:clamp(14px,3.4vw,17px)}
+.stat td{padding:5px 8px;border-bottom:2px dashed #e2c48c}
+.stat td:last-child{text-align:right;font-weight:900;color:#b3440b}
+.badge{display:inline-block;background:linear-gradient(#ffd23f,#f39a0b);color:#5a2a00;font-weight:900;font-size:clamp(18px,4.6vw,26px);padding:6px 20px;border-radius:99px;border:3px solid #a35a00;margin:6px 0}
+.bigstars{font-size:40px;color:#ffb400;text-align:center;letter-spacing:6px;text-shadow:0 3px 0 #a35a00}
+.setr{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:10px 0;font-weight:800;font-size:clamp(14px,3.4vw,17px)}
+.setr input[type=range]{flex:1;max-width:220px}
+.tog{font:inherit;font-weight:900;border:0;border-radius:99px;padding:6px 18px;color:#fff;background:#2e9e3e;cursor:pointer;min-width:74px}
+.tog.off{background:#8b8b8b}
+ul.help{margin:6px 0;padding-left:20px;font-size:clamp(14px,3.3vw,16.5px);line-height:1.5}
+kbd{background:#3b2a14;color:#fff;border-radius:6px;padding:1px 7px;font-family:inherit;font-weight:800;font-size:.9em}
+.devtop{display:flex;align-items:center;gap:14px;margin:6px 0 12px}
+.ava{flex:none;width:112px;height:112px;object-fit:cover;background-color:#fff;border-radius:50%;background:linear-gradient(135deg,#ff8a1f,#c95a06);color:#fff;font-weight:900;font-size:30px;display:flex;align-items:center;justify-content:center;border:4px solid #ffd23f;box-shadow:0 5px 0 #7d4a10}
+.devn{font-weight:900;font-size:clamp(17px,4.4vw,23px);color:#b3440b;line-height:1.2}
+.devd{display:inline-block;background:linear-gradient(#ffd23f,#f39a0b);color:#5a2a00;font-weight:900;font-size:clamp(12.5px,3.1vw,15px);padding:2px 12px;border-radius:99px;border:2px solid #a35a00;margin:5px 0 2px}
+.devr{font-size:clamp(13px,3.2vw,15.5px);font-weight:700;margin-top:3px}
+/* in-game ui */
+#pauseBtn,#act,#touch,#rot{display:none}
+body.play #pauseBtn{display:block}
+#pauseBtn{position:fixed;right:10px;top:10px;z-index:10;font:inherit;font-weight:900;font-size:15px;color:#fff;background:rgba(20,24,60,.75);border:2px solid #fff;border-radius:12px;padding:6px 12px;cursor:pointer}
+#act{position:fixed;left:50%;bottom:22%;transform:translateX(-50%);z-index:11}
+body.play #act.on{display:block;animation:pop .3s}
+body.play.touch #touch{display:block}
+#touch .tb{position:fixed;z-index:10;width:66px;height:66px;border-radius:50%;border:3px solid rgba(255,255,255,.9);background:rgba(20,24,60,.55);color:#fff;font:inherit;font-weight:900;font-size:13px;display:flex;align-items:center;justify-content:center;touch-action:none}
+#touch .tb.dn{background:rgba(255,166,61,.85)}
+#tl{left:14px;bottom:18px}#tr{left:92px;bottom:18px}
+#tj{right:14px;bottom:18px;width:76px!important;height:76px!important}#ta{right:100px;bottom:14px}#ts{right:66px;bottom:98px}
+#tl,#tr{font-size:26px!important}
+@media (orientation:portrait){body.play.touch #rot{display:block;position:fixed;left:0;right:0;top:calc(100vw*9/16 + 8px);text-align:center;font-size:13px;color:#cfe6ff;z-index:5}}
+</style>
+</head>
+<body>
+<canvas id="cv" width="960" height="540"></canvas>
+<button id="pauseBtn">II Jeda</button>
+<button id="act" class="btn b2">Buka (E)</button>
+<div id="rot">Putar HP ke posisi mendatar agar lebih nyaman bermain.</div>
+<div id="touch">
+  <button class="tb" id="tl" data-k="left">&#9664;</button>
+  <button class="tb" id="tr" data-k="right">&#9654;</button>
+  <button class="tb" id="tj" data-k="jump">LOMPAT</button>
+  <button class="tb" id="ta" data-k="atk">SERANG</button>
+  <button class="tb" id="ts" data-k="sp">JURUS</button>
+</div>
+
+<div class="ov on" id="menu"><div class="mbox">
+  <div class="logo">
+    <div class="t1">PETUALANGAN NINJA</div>
+    <div class="t2">MISI PENYELAMAT HARTA KARUN</div>
+    <div class="t3">"Jelajahi Dunia, Taklukkan Tantangan, Temukan Harta Karun!"</div>
+    <div class="t4">Matematika Kelas VI SD &middot; Pengurutan dan Pembandingan Data</div>
+  </div>
+  <input id="nm" maxlength="20" placeholder="Tulis nama ninjamu" autocomplete="off">
+  <button class="btn" id="bStart">MULAI PETUALANGAN</button>
+  <button class="btn b2" id="bHelp">PETUNJUK PERMAINAN</button>
+  <button class="btn b3" id="bSet">PENGATURAN</button>
+  <button class="btn b3" id="bDev">PROFIL PENGEMBANG</button>
+</div></div>
+
+<div class="ov" id="dev"><div class="card">
+  <h2>PROFIL PENGEMBANG</h2>
+  <div class="devtop"><img class="ava" alt="Foto Anang Sutrisno" src="data:image/jpeg;base64,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">
+    <div><div class="devn">Anang Sutrisno, S.Pd., M.Pd.</div>
+    <div class="devd">Duta Teknologi Kemendikdasmen</div>
+    <div class="devr">Kepala Sekolah &middot; Konten Kreator Media Pembelajaran Interaktif dan Gim Edukasi</div></div></div>
+  <table class="stat">
+    <tr><td>Satuan pendidikan</td><td>SD Negeri 002 Lubuk Keranji</td></tr>
+    <tr><td>Kecamatan</td><td>Bandar Petalangan</td></tr>
+    <tr><td>Kabupaten</td><td>Pelalawan</td></tr>
+    <tr><td>Provinsi</td><td>Riau</td></tr>
+    <tr><td>Nama gim</td><td>Petualangan Ninja: Misi Penyelamat Harta Karun</td></tr>
+    <tr><td>Sasaran</td><td>Matematika Kelas VI SD (Fase C)</td></tr>
+    <tr><td>Materi</td><td>Pengurutan dan Pembandingan Data</td></tr>
+    <tr><td>Tahun</td><td>2026</td></tr>
+  </table>
+  <p style="text-align:center;font-style:italic">"Belajar matematika sambil berpetualang: cerdas, berani, dan tekun."</p>
+  <div class="row"><button class="btn" data-go="menu">KEMBALI</button></div>
+</div></div>
+
+<div class="ov" id="help"><div class="card">
+  <h2>PETUNJUK PERMAINAN</h2>
+  <p><b>Tujuan:</b> bantu Ryuka menemukan lima permata matematika yang dicuri Shadow Clan.</p>
+  <ul class="help">
+    <li><kbd>A</kbd>/<kbd>D</kbd> atau <kbd>&larr;</kbd>/<kbd>&rarr;</kbd> bergerak, <kbd>Spasi</kbd> melompat.</li>
+    <li><kbd>J</kbd> menyerang dengan pedang, <kbd>K</kbd> jurus bayangan (melesat dan kebal sesaat).</li>
+    <li><kbd>E</kbd> atau tombol biru di layar untuk membuka gulungan, pintu, dan peti.</li>
+    <li>Di HP dan tablet, gunakan tombol di layar.</li>
+    <li>Kumpulkan koin, kalahkan musuh, dan hindari jurang serta jebakan. Kamu punya 3 nyawa.</li>
+    <li>Tiap wilayah punya 5 tantangan matematika. Jawab minimal 4 dengan benar untuk membuka peti permata.</li>
+    <li>Kalau jawabanmu belum tepat, kamu mendapat petunjuk dan satu kesempatan lagi.</li>
+    <li>Shiro si kelinci memberi tanda seru bila ada benda tersembunyi di dekatmu.</li>
+  </ul>
+  <div class="row"><button class="btn" data-go="menu">KEMBALI</button></div>
+</div></div>
+
+<div class="ov" id="set"><div class="card">
+  <h2>PENGATURAN</h2>
+  <div class="setr"><span>Musik</span><button class="tog" id="sMus">ON</button></div>
+  <div class="setr"><span>Volume musik</span><input type="range" id="sMv" min="0" max="100"></div>
+  <div class="setr"><span>Efek suara</span><button class="tog" id="sSfx">ON</button></div>
+  <div class="setr"><span>Volume efek</span><input type="range" id="sSv" min="0" max="100"></div>
+  <div class="row" id="rst1"><button class="btn b4" id="bReset">RESET PROGRES</button></div>
+  <div id="rst2" style="display:none"><p style="text-align:center"><b>Yakin?</b> Semua progres, skor, dan permata akan dihapus.</p>
+    <div class="row"><button class="btn b4" id="bResetY">YA, HAPUS</button><button class="btn b3" id="bResetN">BATAL</button></div></div>
+  <div class="row"><button class="btn" id="bSetBack">KEMBALI</button></div>
+</div></div>
+
+<div class="ov" id="dlg"><div class="dbox">
+  <canvas id="dpic" width="72" height="72"></canvas>
+  <div class="dtx"><div id="dwho"></div><div id="dtext"></div>
+    <div class="dbtn"><button class="btn b3" id="dSkip">LEWATI</button><button class="btn" id="dNext">LANJUTKAN</button></div></div>
+</div></div>
+
+<div class="ov" id="map"><div class="mapc">
+  <h2>PETA SHINOBI LAND</h2>
+  <div class="sub" id="mapSub"></div>
+  <div class="nodes" id="nodes"></div>
+  <div class="maptot" id="mapTot"></div>
+  <div class="row"><button class="btn b2" id="bRep">LIHAT HASIL</button><button class="btn b3" id="bStory">CERITA</button><button class="btn b3" data-go="menu">MENU</button></div>
+</div></div>
+
+<div class="ov" id="qp"><div class="card">
+  <div class="qhead"><div class="chest"><i></i><i></i></div><div class="ttl">TANTANGAN MATEMATIKA</div><div id="qprog"></div></div>
+  <div id="qtext"></div>
+  <table id="qtab"></table>
+  <div id="qopts"></div>
+  <div id="qfb"></div>
+  <div class="row"><button class="btn" id="qNext" style="display:none">LANJUTKAN</button></div>
+</div></div>
+
+<div class="ov" id="pause"><div class="card">
+  <h2>JEDA</h2>
+  <div class="row" style="flex-direction:column">
+    <button class="btn" id="pRes">LANJUTKAN</button>
+    <button class="btn b2" id="pRetry">ULANGI LEVEL</button>
+    <button class="btn b3" id="pSet">PENGATURAN</button>
+    <button class="btn b3" id="pMap">KEMBALI KE PETA</button>
+  </div>
+</div></div>
+
+<div class="ov" id="win"><div class="card">
+  <h2 id="wTitle">LEVEL SELESAI!</h2>
+  <div class="bigstars pop" id="wStars"></div>
+  <table class="stat" id="wStat"></table>
+  <div class="row"><button class="btn" id="wNext">LANJUT KE LEVEL BERIKUTNYA</button><button class="btn b3" id="wMap">PETA</button></div>
+</div></div>
+
+<div class="ov" id="over"><div class="card">
+  <h2>GAME OVER</h2>
+  <p style="text-align:center">Jangan menyerah, Ninja! Setiap kegagalan adalah latihan.</p>
+  <table class="stat" id="oStat"></table>
+  <div class="row"><button class="btn" id="oRetry">COBA LAGI</button><button class="btn b3" id="oMap">PETA</button></div>
+</div></div>
+
+<div class="ov" id="end" style="background:transparent"><div class="card">
+  <h2>SELAMAT, NINJA HEBAT!</h2>
+  <p style="text-align:center">Kamu berhasil menyelamatkan dunia ninja! Dengan kecerdasan, keberanian, dan ketekunan, kamu berhasil menemukan seluruh harta karun.</p>
+  <div class="row"><button class="btn" id="eAgain">MAIN LAGI</button><button class="btn b2" id="eRep">LIHAT HASIL</button><button class="btn b3" data-go="menu">KEMBALI KE MENU</button></div>
+</div></div>
+
+<div class="ov" id="rep"><div class="card">
+  <h2>LAPORAN HASIL PETUALANGAN</h2>
+  <div style="text-align:center"><div class="badge" id="rBadge"></div></div>
+  <table class="stat" id="rStat"></table>
+  <p id="rNote" style="text-align:center;font-weight:700"></p>
+  <div class="row"><button class="btn" id="rPrac">ULANGI LATIHAN</button><button class="btn b2" id="rMap">PETA</button><button class="btn b3" data-go="menu">MENU</button></div>
+</div></div>
+
+<script>
+'use strict';
+/* =====================================================================
+   PETUALANGAN NINJA: MISI PENYELAMAT HARTA KARUN
+   Matematika Kelas VI SD - Pengurutan dan Pembandingan Data
+
+   CARA MENGGANTI SOAL (untuk guru):
+   Setiap soal ditulis dalam satu baris pada BANK_SOAL di bawah, dengan urutan:
+   [ "teks soal", tabel atau null, ["pilihan 1","pilihan 2","pilihan 3","pilihan 4"],
+     nomor pilihan yang benar (0 = pilihan pertama), "petunjuk", "pembahasan" ]
+   Tabel ditulis: {h:["Judul kolom 1","Judul kolom 2"], r:[["baris",nilai], ...]}
+   Lima soal pertama tiap level adalah soal utama; sisanya soal cadangan.
+   Posisi pilihan jawaban diacak otomatis saat bermain.
+   ===================================================================== */
+const BANK_SOAL={
+1:[
+["Perhatikan data jumlah koin yang dikumpulkan lima ninja: 12, 8, 15, 10, 5. Urutan dari yang terkecil ke terbesar adalah ...",null,["5, 8, 10, 12, 15","15, 12, 10, 8, 5","8, 5, 10, 15, 12","10, 5, 8, 12, 15"],0,"Cari angka paling kecil dulu, lalu angka terkecil berikutnya.","Angka terkecil adalah 5, lalu 8, 10, 12, dan yang terbesar 15. Jadi urutannya 5, 8, 10, 12, 15."],
+["Data tinggi pohon di hutan ninja adalah 120, 150, 135, 110, dan 145 cm. Pohon tertinggi memiliki tinggi ...",null,["120 cm","135 cm","145 cm","150 cm"],3,"Tertinggi berarti angka yang paling besar. Bandingkan angka puluhannya.","Dari 120, 150, 135, 110, 145, angka yang paling besar adalah 150. Jadi pohon tertinggi 150 cm."],
+["Data hasil latihan lima ninja: 75, 90, 65, 85, 80. Urutan dari terbesar ke terkecil adalah ...",null,["65, 75, 80, 85, 90","90, 85, 80, 75, 65","75, 65, 85, 90, 80","80, 90, 75, 65, 85"],1,"Terbesar ke terkecil berarti mulai dari angka yang paling besar.","Angka terbesar 90, lalu 85, 80, 75, dan terkecil 65. Jadi urutannya 90, 85, 80, 75, 65."],
+["Jumlah koin yang ditemukan adalah 25, 18, 30, 22, 15. Nilai terkecil adalah ...",null,["15","18","22","30"],0,"Nilai terkecil adalah angka yang paling kecil di antara semua data.","Dari 25, 18, 30, 22, 15, angka yang paling kecil adalah 15."],
+["Data jumlah bintang yang dikumpulkan: 45, 30, 55, 40, 50. Urutan naik yang benar adalah ...",null,["55, 50, 45, 40, 30","30, 40, 45, 50, 55","40, 30, 50, 45, 55","45, 30, 40, 55, 50"],1,"Urutan naik berarti dari yang terkecil ke yang terbesar.","Urutan naik dimulai dari 30, lalu 40, 45, 50, dan 55."],
+["Data panjang tali lima ninja (dalam meter): 24, 18, 30, 12, 21. Urutan dari yang terpendek adalah ...",null,["12, 18, 21, 24, 30","30, 24, 21, 18, 12","12, 21, 18, 24, 30","18, 12, 21, 30, 24"],0,"Terpendek berarti angka terkecil ditulis lebih dulu.","Angka terkecil 12, lalu 18, 21, 24, dan 30."],
+["Data jumlah bintang lempar lima ninja: 64, 46, 60, 66, 56. Nilai terbesar adalah ...",null,["64","60","66","56"],2,"Bandingkan angka puluhannya dulu, lalu satuannya.","64 dan 66 sama-sama berpuluhan 6. Satuan 6 lebih besar dari 4, jadi 66 yang terbesar."]
+],
+2:[
+["Ninja Ryuka mengumpulkan 45 koin, sedangkan Kenzo mengumpulkan 38 koin. Siapa yang mendapatkan koin lebih banyak?",null,["Ryuka","Kenzo","Sama banyak","Tidak dapat ditentukan"],0,"Bandingkan 45 dan 38. Mana yang lebih besar?","45 lebih besar daripada 38, jadi Ryuka mendapat koin lebih banyak."],
+["Perhatikan jumlah ikan di dua wilayah laut. Perbandingan yang benar adalah ...",{h:["Wilayah","Jumlah ikan"],r:[["A",125],["B",150]]},["125 > 150","125 < 150","125 = 150","150 < 125"],1,"Mulut tanda selalu terbuka ke arah angka yang lebih besar.","125 lebih kecil daripada 150, sehingga ditulis 125 < 150."],
+["Kelompok ninja A mengumpulkan 75 mutiara. Kelompok B mengumpulkan 58 mutiara. Selisih jumlah mutiara adalah ...",null,["15","17","18","20"],1,"Selisih dicari dengan mengurangkan angka yang besar dengan angka yang kecil.","75 − 58 = 17. Jadi selisihnya 17 mutiara."],
+["Perhatikan jumlah kapal di empat pelabuhan. Pelabuhan yang memiliki kapal terbanyak adalah ...",{h:["Pelabuhan","Jumlah kapal"],r:[["A",25],["B",35],["C",20],["D",40]]},["Pelabuhan A","Pelabuhan B","Pelabuhan C","Pelabuhan D"],3,"Terbanyak berarti angka yang paling besar pada tabel.","Angka terbesar pada tabel adalah 40, yaitu milik Pelabuhan D."],
+["Perhatikan data poin tiga ninja. Pernyataan yang benar adalah ...",{h:["Ninja","Poin"],r:[["A",85],["B",85],["C",90]]},["A lebih besar dari B","A sama dengan B","B lebih besar dari C","C lebih kecil dari A"],1,"Lihat poin A dan B. Apakah angkanya berbeda?","A = 85 dan B = 85, jadi A sama dengan B. C = 90 adalah yang terbesar."],
+["Ryuka mengumpulkan 62 koin dan Kage mengumpulkan 49 koin. Selisih koin mereka adalah ...",null,["11","12","13","23"],2,"Kurangkan angka yang besar dengan angka yang kecil.","62 − 49 = 13. Jadi selisihnya 13 koin."],
+["Pulau A memiliki 240 pohon kelapa dan Pulau B memiliki 204 pohon kelapa. Perbandingan yang benar adalah ...",null,["240 < 204","240 = 204","240 > 204","204 > 240"],2,"Ratusannya sama. Bandingkan angka puluhannya.","Puluhan pada 240 adalah 4, pada 204 adalah 0. Jadi 240 > 204."]
+],
+3:[
+["Perhatikan data jumlah bambu yang dikumpulkan. Hari dengan pengumpulan bambu terbanyak adalah ...",{h:["Hari","Jumlah bambu"],r:[["Senin",25],["Selasa",30],["Rabu",20],["Kamis",35],["Jumat",40]]},["Senin","Rabu","Kamis","Jumat"],3,"Cari angka paling besar pada tabel, lalu lihat harinya.","Angka terbesar adalah 40, yaitu pada hari Jumat."],
+["Perhatikan data jumlah bambu yang dikumpulkan. Berapa selisih jumlah bambu pada hari Jumat dan Rabu?",{h:["Hari","Jumlah bambu"],r:[["Senin",25],["Selasa",30],["Rabu",20],["Kamis",35],["Jumat",40]]},["10","15","20","25"],2,"Lihat angka pada hari Jumat dan Rabu, lalu kurangkan.","Jumat 40 dan Rabu 20. 40 − 20 = 20."],
+["Perhatikan data jumlah buah yang ditemukan. Buah yang jumlahnya paling sedikit adalah ...",{h:["Buah","Jumlah"],r:[["Apel",25],["Jeruk",40],["Mangga",35],["Pisang",30]]},["Apel","Jeruk","Mangga","Pisang"],0,"Paling sedikit berarti angka yang paling kecil.","Angka terkecil adalah 25, yaitu jumlah apel."],
+["Perhatikan jumlah koin empat ninja. Selisih koin terbanyak dan tersedikit adalah ...",{h:["Ninja","Koin"],r:[["Ryuka",120],["Kenzo",100],["Shiro",150],["Kage",90]]},["40","50","60","70"],2,"Cari angka terbesar dan terkecil, lalu kurangkan.","Terbanyak 150 (Shiro) dan tersedikit 90 (Kage). 150 − 90 = 60."],
+["Nilai latihan empat ninja adalah 80, 75, 90, 85. Rentang data tersebut adalah ...",null,["10","15","20","25"],1,"Rentang = nilai tertinggi − nilai terendah.","Nilai tertinggi 90 dan terendah 75. 90 − 75 = 15."],
+["Perhatikan data pengunjung kuil. Hari dengan pengunjung paling sedikit adalah ...",{h:["Hari","Pengunjung"],r:[["Sabtu",48],["Minggu",60],["Senin",32]]},["Sabtu","Minggu","Senin","Semua sama"],2,"Cari angka yang paling kecil pada tabel.","Angka terkecil adalah 32, yaitu pada hari Senin."],
+["Data berat empat karung beras (dalam kg): 55, 70, 65, 90. Rentang data tersebut adalah ...",null,["15","25","35","45"],2,"Rentang = nilai tertinggi − nilai terendah.","Tertinggi 90 dan terendah 55. 90 − 55 = 35."]
+],
+4:[
+["Perhatikan data jumlah permata. Urutan jumlah permata dari yang paling sedikit adalah ...",{h:["Permata","Jumlah"],r:[["Merah",35],["Biru",45],["Hijau",25],["Ungu",40]]},["Hijau, Merah, Ungu, Biru","Biru, Ungu, Merah, Hijau","Merah, Hijau, Biru, Ungu","Ungu, Biru, Merah, Hijau"],0,"Urutkan angkanya dulu dari yang terkecil, lalu tulis nama permatanya.","Urutan angka: 25, 35, 40, 45. Jadi Hijau, Merah, Ungu, Biru."],
+["Perhatikan data hasil pertandingan. Selisih nilai tertinggi dan terendah adalah ...",{h:["Tim","Poin"],r:[["A",125],["B",140],["C",115]]},["15","20","25","30"],2,"Cari poin terbesar dan terkecil, lalu kurangkan.","Tertinggi 140 (Tim B) dan terendah 115 (Tim C). 140 − 115 = 25."],
+["Empat kelompok mengumpulkan kristal. Kelompok yang berada di urutan kedua jika diurutkan dari yang terbesar adalah ...",{h:["Kelompok","Kristal"],r:[["Kelompok 1",45],["Kelompok 2",60],["Kelompok 3",35],["Kelompok 4",50]]},["Kelompok 1","Kelompok 2","Kelompok 3","Kelompok 4"],3,"Urutkan dari angka terbesar, lalu lihat yang nomor dua.","Urutan dari terbesar: 60, 50, 45, 35. Angka 50 adalah milik Kelompok 4."],
+["Data hasil latihan ninja: 70, 80, 90, 75, 85. Pernyataan yang benar adalah ...",null,["Nilai terendah 75","Nilai tertinggi 90","Rentang data 15","Nilai 80 merupakan nilai tertinggi"],1,"Periksa satu per satu: mana nilai terbesar dan terkecilnya?","Nilai tertinggi 90 dan terendah 70, sehingga rentangnya 20. Pernyataan yang benar: nilai tertinggi 90."],
+["Dua kelompok mengumpulkan harta karun. Kelompok A: 45, 50, 55. Kelompok B: 40, 60, 50. Pernyataan yang benar adalah ...",null,["Nilai tertinggi kelompok A lebih besar","Nilai tertinggi kelompok B lebih besar","Kedua kelompok memiliki nilai tertinggi yang sama","Kelompok A selalu lebih besar"],1,"Cari nilai tertinggi tiap kelompok, lalu bandingkan.","Nilai tertinggi A adalah 55 dan nilai tertinggi B adalah 60. Karena 60 > 55, nilai tertinggi kelompok B lebih besar."],
+["Jumlah kristal di tiga gua: Gua A = 85, Gua B = 70, Gua C = 95. Urutan gua dari kristal terbanyak adalah ...",null,["A, B, C","C, A, B","B, A, C","C, B, A"],1,"Urutkan angkanya dari yang terbesar.","Urutan dari terbesar: 95 (C), 85 (A), 70 (B). Jadi C, A, B."],
+["Data jumlah obor di empat lorong: 30, 45, 25, 50. Selisih nilai terbesar dan terkecil adalah ...",null,["15","20","25","30"],2,"Cari angka terbesar dan terkecil, lalu kurangkan.","Terbesar 50 dan terkecil 25. 50 − 25 = 25."]
+],
+5:[
+["Data hasil ujian lima ninja: 85, 90, 75, 95, 80. Urutan dari terbesar ke terkecil adalah ...",null,["95, 90, 85, 80, 75","75, 80, 85, 90, 95","90, 95, 85, 75, 80","85, 80, 95, 90, 75"],0,"Mulai dari angka yang paling besar.","Angka terbesar 95, lalu 90, 85, 80, dan 75."],
+["Perhatikan data jumlah harta karun. Berapa selisih jumlah harta karun terbesar dan terkecil?",{h:["Peti","Jumlah"],r:[["A",125],["B",150],["C",100],["D",175]]},["50","60","75","80"],2,"Cari angka terbesar dan terkecil, lalu kurangkan.","Terbesar 175 dan terkecil 100. 175 − 100 = 75."],
+["Jumlah poin lima pemain: 110, 135, 120, 145, 130. Pemain dengan poin tertinggi memiliki ... poin.",null,["110","120","135","145"],3,"Tertinggi berarti angka yang paling besar.","Dari kelima angka, yang paling besar adalah 145."],
+["Perhatikan data nilai empat tim. Berapa selisih nilai tim tertinggi dan tim terendah?",{h:["Tim","Nilai"],r:[["Merah",85],["Biru",90],["Hijau",75],["Kuning",95]]},["10","15","20","25"],2,"Cari nilai tertinggi dan terendah, lalu kurangkan.","Tertinggi 95 (Kuning) dan terendah 75 (Hijau). 95 − 75 = 20."],
+["Perhatikan data jumlah koin selama lima hari. Pernyataan yang benar adalah ...",{h:["Hari","Koin"],r:[["Hari 1",40],["Hari 2",55],["Hari 3",45],["Hari 4",65],["Hari 5",50]]},["Hari 1 memiliki jumlah koin terbanyak","Hari 4 memiliki jumlah koin terbanyak","Hari 2 memiliki jumlah koin paling sedikit","Selisih nilai tertinggi dan terendah adalah 15"],1,"Cari angka terbesar dan terkecil pada tabel lebih dulu.","Terbanyak 65 (Hari 4) dan tersedikit 40 (Hari 1), selisihnya 25. Pernyataan yang benar: Hari 4 terbanyak."],
+["Data nilai empat ninja: 68, 74, 59, 80. Rentang data tersebut adalah ...",null,["12","15","21","26"],2,"Rentang = nilai tertinggi − nilai terendah.","Tertinggi 80 dan terendah 59. 80 − 59 = 21."],
+["Perhatikan data poin tiga sahabat. Pernyataan yang benar adalah ...",{h:["Nama","Poin"],r:[["Ryuka",210],["Kenzo",190],["Shiro",230]]},["Kenzo memiliki poin tertinggi","Shiro memiliki poin tertinggi","Ryuka memiliki poin terendah","Selisih poin tertinggi dan terendah adalah 20"],1,"Bandingkan ketiga angka: mana yang paling besar dan paling kecil?","Tertinggi 230 (Shiro) dan terendah 190 (Kenzo), selisihnya 40. Pernyataan yang benar: Shiro tertinggi."]
+]};
+const QB={};
+for(const n in BANK_SOAL)QB[n]=BANK_SOAL[n].map((a,i)=>({id:n+'-'+i,q:a[0],t:a[1],o:a[2],a:a[3],h:a[4],e:a[5]}));
+
+/* ---------------- dasar ---------------- */
+const W=960,H=540,GY=450;
+const cv=document.getElementById('cv');
+let c=cv.getContext('2d');
+const $=id=>document.getElementById(id);
+const rnd=(a,b)=>a+Math.random()*(b-a),clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;}
+function hit(a,b){return a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;}
+function rr(x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.lineTo(x+w-r,y);c.quadraticCurveTo(x+w,y,x+w,y+r);c.lineTo(x+w,y+h-r);c.quadraticCurveTo(x+w,y+h,x+w-r,y+h);c.lineTo(x+r,y+h);c.quadraticCurveTo(x,y+h,x,y+h-r);c.lineTo(x,y+r);c.quadraticCurveTo(x,y,x+r,y);c.closePath();}
+function el(x,y,rx,ry){c.beginPath();c.ellipse(x,y,Math.abs(rx),Math.abs(ry),0,0,7);c.fill();}
+function star(x,y,r,col){c.fillStyle=col;c.beginPath();for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,q=i%2?r*0.45:r;c.lineTo(x+Math.cos(a)*q,y+Math.sin(a)*q);}c.closePath();c.fill();}
+
+/* ---------------- simpan progres ---------------- */
+const SAVE_KEY='petualangan-ninja-v1';
+const defSave=()=>({name:'',unlocked:1,rec:{},gems:[],best:0,seen:false,set:{music:true,sfx:true,mv:0.5,sv:0.7},wrong:[]});
+let S=defSave();
+function load(){try{const t=localStorage.getItem(SAVE_KEY);if(t){const o=JSON.parse(t);S=Object.assign(defSave(),o);S.set=Object.assign(defSave().set,o.set||{});}}catch(e){}}
+function save(){try{localStorage.setItem(SAVE_KEY,JSON.stringify(S));}catch(e){}}
+load();
+function totals(){const t={score:0,coins:0,asked:0,correct:0,first:0,time:0,levels:0};for(const k in S.rec){const r=S.rec[k];t.score+=r.score;t.coins+=r.coins;t.asked+=r.asked;t.correct+=r.correct;t.first+=r.first;t.time+=r.time;t.levels++;}return t;}
+
+/* ---------------- audio (disintesis, tanpa berkas luar) ---------------- */
+const AU={ctx:null,mg:null,sg:null,timer:null,track:null,want:null,step:0};
+function auStart(){if(AU.ctx){if(AU.ctx.state==='suspended')AU.ctx.resume().catch(()=>{});return;}
+  try{const C=window.AudioContext||window.webkitAudioContext;AU.ctx=new C();AU.mg=AU.ctx.createGain();AU.sg=AU.ctx.createGain();AU.mg.connect(AU.ctx.destination);AU.sg.connect(AU.ctx.destination);auVol();const w=AU.want;AU.track=null;music(w);}catch(e){AU.ctx=null;}}
+function auVol(){if(!AU.ctx)return;AU.mg.gain.value=S.set.music?S.set.mv*0.22:0;AU.sg.gain.value=S.set.sfx?S.set.sv*0.45:0;}
+function tone(f,d,type,dest,delay,vol,f2){if(!AU.ctx)return;try{const t=AU.ctx.currentTime+(delay||0),o=AU.ctx.createOscillator(),g=AU.ctx.createGain();o.type=type||'sine';o.frequency.setValueAtTime(f,t);if(f2)o.frequency.exponentialRampToValueAtTime(f2,t+d);g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(vol||0.5,t+0.012);g.gain.exponentialRampToValueAtTime(0.0001,t+d);o.connect(g);g.connect(dest);o.start(t);o.stop(t+d+0.03);}catch(e){}}
+function sfx(n){const g=AU.sg;if(!AU.ctx||!S.set.sfx)return;switch(n){
+  case'jump':tone(320,0.16,'square',g,0,0.25,620);break;
+  case'step':tone(110,0.04,'triangle',g,0,0.18,70);break;
+  case'sword':tone(900,0.09,'sawtooth',g,0,0.22,220);break;
+  case'special':tone(240,0.3,'sawtooth',g,0,0.3,1200);tone(480,0.3,'square',g,0.05,0.15,1600);break;
+  case'coin':tone(988,0.07,'square',g,0,0.22);tone(1319,0.14,'square',g,0.07,0.22);break;
+  case'gem':[784,988,1175,1568].forEach((f,i)=>tone(f,0.16,'triangle',g,i*0.08,0.35));break;
+  case'ok':[523,659,784,1047].forEach((f,i)=>tone(f,0.14,'square',g,i*0.09,0.25));break;
+  case'no':tone(300,0.18,'sawtooth',g,0,0.25,180);tone(200,0.25,'sawtooth',g,0.16,0.25,120);break;
+  case'hurt':tone(420,0.22,'square',g,0,0.3,110);break;
+  case'enemy':tone(180,0.14,'sawtooth',g,0,0.2,260);break;
+  case'hitE':tone(520,0.07,'square',g,0,0.2,300);break;
+  case'boom':tone(160,0.3,'sawtooth',g,0,0.35,40);tone(90,0.35,'square',g,0.02,0.25,30);break;
+  case'door':tone(140,0.4,'triangle',g,0,0.4,90);tone(660,0.2,'triangle',g,0.25,0.25);break;
+  case'click':tone(660,0.05,'square',g,0,0.15);break;}}
+const NT=s=>220*Math.pow(2,s/12);
+const TR={
+  intro:{bpm:92,mel:[12,null,15,17,19,null,17,15,12,null,10,12,7,null,null,null],bass:[0,null,null,null,-5,null,null,null,-2,null,null,null,-5,null,null,null]},
+  adv:{bpm:126,mel:[0,3,5,7,5,3,5,null,7,10,12,10,7,5,3,null,0,3,5,7,10,7,5,null,3,5,3,0,-2,0,null,null],bass:[-12,null,-12,null,-9,null,-9,null,-7,null,-7,null,-5,null,-5,null]},
+  boss:{bpm:150,mel:[0,null,0,1,0,null,6,5,0,null,0,1,3,1,0,null],bass:[-12,-12,null,-12,-11,null,-12,null]},
+  win:{bpm:132,mel:[7,7,7,12,null,10,12,null,14,null,12,null,19,null,null,null],bass:[-5,null,-5,null,0,null,0,null]}};
+function music(n){AU.want=n;if(AU.track===n)return;AU.track=n;AU.step=0;clearInterval(AU.timer);if(!n||!AU.ctx)return;const t=TR[n];
+  AU.timer=setInterval(()=>{if(!AU.ctx||!S.set.music)return;const i=AU.step++,m=t.mel[i%t.mel.length],b=t.bass[i%t.bass.length];if(m!=null)tone(NT(m),0.24,'triangle',AU.mg,0,0.5);if(b!=null)tone(NT(b),0.3,'sine',AU.mg,0,0.6);},60000/t.bpm/2);}
+
+/* ---------------- tokoh (semua orisinal) ---------------- */
+const PAL={
+  ryuka:{suit:'#ff8a1f',dark:'#c95a06',band:'#ffffff',star:'#ffd23f',skin:'#ffd9b3'},
+  kenzo:{suit:'#b98a54',dark:'#7d5529',band:'#fff1c9',skin:'#f2c9a0'},
+  kage:{suit:'#3a2d5c',dark:'#181126',band:'#a45cff',skin:'#cdbfe6',eye:'#e9d5ff'},
+  boss:{suit:'#2b1d22',dark:'#0e0a0c',band:'#e02424',skin:'#b9a3a3',eye:'#ff5252'},
+  e1:{suit:'#6c8795',dark:'#3e525c',band:'#d7e3ea',skin:'#f0cfae'},
+  e2:{suit:'#c0392b',dark:'#7b1f16',band:'#1f2a44',skin:'#e9c39b'},
+  e3:{suit:'#4f8a3c',dark:'#2c5220',band:'#e6d36a',skin:'#f0cfae'},
+  e5:{suit:'#7a1f2b',dark:'#3d0f15',band:'#2b2b2b',skin:'#d9b8a0'}};
+function ninja(x,y,o){
+  const s=o.s||1,f=o.f||1,t=o.t||0,P=o.pal,pose=o.pose||'idle';
+  const sw=pose==='run'?Math.sin(t*14):0,air=pose==='jump';
+  const bob=pose==='idle'?Math.sin(t*3)*1.2:pose==='run'?-Math.abs(sw)*2:pose==='win'?-Math.abs(Math.sin(t*6))*10:0;
+  c.save();c.translate(x,y);
+  c.fillStyle='rgba(0,0,0,.22)';el(0,0,17*s,4.5*s);
+  c.scale(f*s,s);c.translate(0,bob);c.lineCap='round';
+  if(o.aura){for(let i=0;i<3;i++){c.fillStyle='rgba(180,30,60,'+(0.10+0.04*Math.sin(t*5+i))+')';el(0,-34,30+i*8+Math.sin(t*4+i)*3,40+i*8);}}
+  c.strokeStyle=P.band;c.lineWidth=4;c.beginPath();c.moveTo(-13,-55);c.quadraticCurveTo(-24,-57+Math.sin(t*8)*3,-31,-49+Math.sin(t*8+1)*4);c.stroke();
+  c.strokeStyle=P.dark;c.lineWidth=9;c.beginPath();c.moveTo(-6,-18);c.lineTo(-6+sw*9+(air?-6:0),-4+(air?-6:0));c.moveTo(6,-18);c.lineTo(6-sw*9+(air?6:0),-4+(air?-3:0));c.stroke();
+  c.strokeStyle=P.dark;c.lineWidth=7;c.beginPath();c.moveTo(-9,-33);c.lineTo(-15-sw*5,-23);c.stroke();
+  if(o.pack){c.fillStyle='#8a5a2b';rr(-18,-37,9,15,3);c.fill();}
+  const g=c.createLinearGradient(-12,-38,12,-14);g.addColorStop(0,P.suit);g.addColorStop(1,P.dark);
+  c.fillStyle=g;rr(-12,-38,24,24,8);c.fill();
+  c.fillStyle=P.band;c.fillRect(-12,-24,24,4);
+  let ang=pose==='atk'?-1.5+(1-(o.ap||0))*2.4:pose==='win'?-2.4:pose==='run'?sw*0.8:air?-0.8:0.35;
+  c.save();c.translate(8,-32);c.rotate(ang);c.strokeStyle=P.suit;c.lineWidth=8;c.beginPath();c.moveTo(0,0);c.lineTo(12,6);c.stroke();
+  if(o.sword){c.strokeStyle='#7a5230';c.lineWidth=5;c.beginPath();c.moveTo(10,7);c.lineTo(16,4);c.stroke();c.strokeStyle=o.swc||'#eef5ff';c.lineWidth=3.6;c.beginPath();c.moveTo(16,4);c.lineTo(40,-8);c.stroke();}
+  if(o.scroll){c.fillStyle='#fff1c9';rr(8,-2,8,18,3);c.fill();c.fillStyle='#b3440b';c.fillRect(8,5,8,3);}
+  c.restore();
+  const hg=c.createRadialGradient(-5,-58,3,0,-51,19);hg.addColorStop(0,P.suit);hg.addColorStop(1,P.dark);
+  c.fillStyle=hg;c.beginPath();c.arc(0,-52,16,0,7);c.fill();
+  c.fillStyle=P.skin;el(3,-50,11,7.5);
+  const blink=(Math.sin(t*1.7+x*0.01)>0.985)?0.4:4;
+  c.fillStyle=P.eye||'#1c1c28';if(P.eye){c.shadowColor=P.eye;c.shadowBlur=8;}
+  el(0,-50,2.6,blink);el(8,-50,2.6,blink);c.shadowBlur=0;
+  if(!P.eye){c.fillStyle='#fff';el(0.8,-51.5,1,1.2);el(8.8,-51.5,1,1.2);}
+  if(o.glasses){c.strokeStyle='#3b2a14';c.lineWidth=1.4;c.beginPath();c.arc(0,-50,4.6,0,7);c.moveTo(12.6,-50);c.arc(8,-50,4.6,0,7);c.stroke();}
+  c.fillStyle=P.band;rr(-15,-62,31,6,3);c.fill();
+  if(P.star)star(4,-59,4.6,P.star);
+  c.restore();
+}
+function blob(x,y,col,dark,t,f,fl){
+  c.save();c.translate(x,y);c.fillStyle='rgba(0,0,0,.22)';el(0,0,20,5);c.scale(f,1);
+  const sq=1+Math.sin(t*6)*0.06;c.scale(1/sq,sq);
+  c.fillStyle=dark;for(let i=-1;i<=1;i++){c.beginPath();c.moveTo(i*11-6,-34);c.lineTo(i*11,-50-Math.abs(i)*-6);c.lineTo(i*11+6,-34);c.fill();}
+  const g=c.createRadialGradient(-6,-30,4,0,-22,26);g.addColorStop(0,fl?'#fff':col);g.addColorStop(1,dark);
+  c.fillStyle=g;c.beginPath();c.ellipse(0,-22,21,22,0,0,7);c.fill();
+  c.fillStyle='#fff';el(2,-26,5,6);el(13,-26,4,5);c.fillStyle='#1c1c28';el(4,-25,2.4,3);el(14,-25,2,2.6);
+  c.strokeStyle='#1c1c28';c.lineWidth=2;c.beginPath();c.moveTo(2,-13);c.lineTo(6,-10);c.lineTo(10,-13);c.lineTo(14,-10);c.stroke();
+  c.restore();
+}
+function rabbit(x,y,t,f){
+  const hop=-Math.abs(Math.sin(t*7))*5;
+  c.save();c.translate(x,y);c.fillStyle='rgba(0,0,0,.2)';el(0,0,11,3);c.scale(f,1);c.translate(0,hop);
+  c.fillStyle='#fff';c.strokeStyle='#c9c9d6';c.lineWidth=1.2;
+  c.save();c.translate(-3,-30);c.rotate(-0.25+Math.sin(t*5)*0.08);c.beginPath();c.ellipse(0,-9,3.6,11,0,0,7);c.fill();c.stroke();c.fillStyle='#ffc2d1';el(0,-9,1.6,7);c.restore();
+  c.fillStyle='#fff';c.save();c.translate(5,-30);c.rotate(0.2+Math.sin(t*5+1)*0.08);c.beginPath();c.ellipse(0,-9,3.6,11,0,0,7);c.fill();c.stroke();c.fillStyle='#ffc2d1';el(0,-9,1.6,7);c.restore();
+  c.fillStyle='#fff';c.beginPath();c.ellipse(-2,-10,10,10,0,0,7);c.fill();c.stroke();
+  c.fillStyle='#8a5a2b';rr(-13,-16,6,9,2);c.fill();
+  c.fillStyle='#fff';c.beginPath();c.arc(2,-24,10,0,7);c.fill();c.stroke();
+  c.fillStyle='#e02424';rr(-8,-32,20,4.5,2);c.fill();
+  c.fillStyle='#1c1c28';el(4,-24,1.7,2.4);el(9,-24,1.5,2.2);c.fillStyle='#ff8fa3';el(8,-20,1.6,1.1);
+  c.restore();
+}
+function gemShape(x,y,r,col,t){
+  c.save();c.translate(x,y);c.shadowColor=col;c.shadowBlur=18+Math.sin(t*4)*6;
+  c.fillStyle=col;c.beginPath();c.moveTo(0,-r);c.lineTo(r*0.8,-r*0.2);c.lineTo(0,r);c.lineTo(-r*0.8,-r*0.2);c.closePath();c.fill();c.shadowBlur=0;
+  c.fillStyle='rgba(255,255,255,.55)';c.beginPath();c.moveTo(0,-r);c.lineTo(r*0.8,-r*0.2);c.lineTo(0,-r*0.1);c.closePath();c.fill();
+  c.fillStyle='rgba(0,0,0,.18)';c.beginPath();c.moveTo(0,r);c.lineTo(-r*0.8,-r*0.2);c.lineTo(0,-r*0.1);c.closePath();c.fill();
+  c.restore();
+}
+function portrait(who){
+  const pc=$('dpic'),pctx=pc.getContext('2d'),old=c;c=pctx;c.clearRect(0,0,72,72);
+  const bg={Ryuka:'#bfe6ff',Kenzo:'#d8f0c0',Shiro:'#ffe0ec',Kage:'#cdbfe6','Master Shadow':'#3a1420'}[who]||'#ffe9bd';
+  c.fillStyle=bg;c.fillRect(0,0,72,72);const t=performance.now()/1000;
+  if(who==='Ryuka')ninja(34,104,{pal:PAL.ryuka,s:1.5,t,sword:0});
+  else if(who==='Kenzo')ninja(34,104,{pal:PAL.kenzo,s:1.5,t,glasses:1});
+  else if(who==='Kage')ninja(34,104,{pal:PAL.kage,s:1.5,t});
+  else if(who==='Master Shadow')ninja(34,104,{pal:PAL.boss,s:1.5,t,aura:1});
+  else if(who==='Shiro')rabbit(34,66,t,1.0),c.setTransform(1,0,0,1,0,0);
+  else{c.fillStyle='#fff1c9';rr(14,18,44,36,6);c.fill();c.strokeStyle='#b9741f';c.lineWidth=3;c.stroke();c.fillStyle='#b9741f';for(let i=0;i<3;i++)c.fillRect(22,28+i*8,28,3);}
+  c=old;
+}
+
+/* ---------------- lima wilayah ---------------- */
+const LV={
+1:{name:'Pegunungan Ninja',gem:'Permata Hijau',gc:'#3ddc84',th:'gunung',item:'gulungan',w:4700,need:4,
+  gr:[[0,720],[850,1560],[1700,2380],[2510,3200],[3340,4700]],
+  pf:[[300,350,140],[500,262,130],[1000,350,150],[1900,350,150],[2100,262,130],[2700,350,150],[3560,350,150],[3780,262,140]],
+  it:[[640,GY],[1075,350],[2165,262],[2775,350],[3850,262]],
+  en:[[900,1500,0],[1760,2330,0],[3400,3660,0],[4020,4380,0]],ro:[[2560,3150]],sp:[[3700,64]],fa:[],
+  cn:[[120,4],[1250,4],[4050,5]],hid:[565,262],heart:[1975,350],chest:4540,
+  tip:'Ingat: urutan naik berarti dari terkecil ke terbesar, urutan turun berarti dari terbesar ke terkecil.',
+  mis:'Permata Hijau disembunyikan di Pegunungan Ninja. Temukan lima gulungan data dan jawab tantangannya. Minimal empat jawaban benar akan membuka peti permata di ujung jalan!'},
+2:{name:'Lautan Misterius',gem:'Permata Biru',gc:'#39a7ff',th:'laut',item:'mutiara',w:4800,need:4,
+  gr:[[0,640],[780,1380],[1530,2150],[2290,2900],[3050,3600],[3740,4800]],
+  pf:[[250,350,150],[900,350,140],[1090,262,130],[1750,350,160],[2450,350,150],[2650,262,130],[3200,350,150],[4000,350,150],[4200,262,140]],
+  it:[[500,GY],[1155,262],[1830,350],[2715,262],[3275,350]],
+  en:[[820,1340,0],[1570,2100,0],[2330,2860,1],[3780,4300,0]],ro:[[3090,3560]],sp:[[2040,64]],fa:[],
+  cn:[[90,3],[1600,4],[4350,4]],hid:[4270,262],heart:[2525,350],chest:4640,
+  tip:'Tanda > berarti lebih dari, tanda < berarti kurang dari, dan = berarti sama dengan. Selisih = bilangan besar − bilangan kecil.',
+  mis:'Permata Biru ada di Lautan Misterius. Kumpulkan lima mutiara di pulau dan kapal karam. Hati-hati, Kage si ninja bayangan berjaga di salah satu pulau!'},
+3:{name:'Lembah Rahasia',gem:'Permata Merah',gc:'#ff4d5e',th:'lembah',item:'simbol rahasia',w:4900,need:4,
+  gr:[[0,800],[930,1500],[1640,2400],[2530,3050],[3190,3900],[4030,4900]],
+  pf:[[350,350,140],[560,262,130],[1100,350,150],[1900,350,150],[2100,262,130],[2700,350,150],[3400,350,150],[3600,262,130],[4250,350,150]],
+  it:[[720,GY],[1175,350],[2165,262],[2775,350],[3665,262]],
+  en:[[960,1460,0],[1680,2350,0],[3230,3850,0],[4080,4500,0]],ro:[[2560,3010]],sp:[[230,60],[4540,64]],fa:[],
+  cn:[[980,4],[1700,4],[3250,4]],hid:[625,262],heart:[1975,350],chest:4740,
+  tip:'Baca tabel dengan teliti. Rentang data = nilai tertinggi − nilai terendah.',
+  mis:'Permata Merah tersembunyi di Lembah Rahasia. Cari lima simbol rahasia di antara bambu dan reruntuhan kuil, lalu baca datanya baik-baik.'},
+4:{name:'Gua Harta Karun',gem:'Permata Ungu',gc:'#b56bff',th:'gua',item:'kristal data',w:4800,need:4,
+  gr:[[0,900],[1030,1900],[2030,2900],[3030,4800]],
+  pf:[[300,350,150],[520,262,130],[1150,350,150],[2150,350,150],[3150,350,150],[3350,262,130],[3900,350,150]],
+  it:[[585,262],[3415,262]],doors:[1500,2500,3600],
+  en:[[1060,1440,0],[1580,1860,1],[2060,2440,0],[2580,2860,0],[3660,4200,0]],ro:[],sp:[[800,60],[3820,60]],fa:[700,1750,2720,4300],
+  cn:[[100,4],[1080,3],[2080,3],[4350,4]],hid:[3975,350],heart:[2225,350],chest:4640,
+  tip:'Untuk soal cerita: tulis dulu datanya, urutkan, lalu cari yang ditanyakan.',
+  mis:'Permata Ungu dijaga di dalam Gua Harta Karun. Ada tiga pintu rahasia berkode dan dua kristal data. Pintu hanya terbuka dengan jawaban yang benar. Awas batu jatuh!'},
+5:{name:'Benteng Shadow Clan',gem:'Permata Emas',gc:'#ffcf3d',th:'benteng',item:'gerbang',w:4900,need:3,
+  gr:[[0,820],[950,1900],[2030,3000],[3130,4900]],
+  pf:[[300,350,150],[520,262,130],[1600,350,150],[1800,262,130],[2650,350,150],[3520,350,150]],
+  it:[],doors:[1300,2400,3400],
+  en:[[980,1250,0],[1360,1850,0],[2060,2350,1],[2460,2950,0],[3180,3350,0],[3460,3800,0]],ro:[],sp:[[690,60],[1480,60]],fa:[],
+  cn:[[100,4],[1000,3],[2080,3],[3200,3]],hid:[585,262],heart:[1865,262],chest:0,arena:3940,
+  tip:'Gunakan semua yang sudah kamu pelajari: membaca tabel, mengurutkan, membandingkan, selisih, dan rentang.',
+  mis:'Inilah Benteng Shadow Clan. Lewati tiga gerbang pertahanan, lalu hadapi Master Shadow untuk merebut Permata Emas. Kami percaya padamu, Ryuka!'}};
+const GROUND={gunung:['#86e05c','#8a6a4a','#5e4630'],laut:['#fff0b8','#e3bd72','#b08a45'],lembah:['#5fcf6a','#7a5b3c','#55402a'],gua:['#9f90e6','#4a3d7a','#2e2552'],benteng:['#aab0c4','#5a5f73','#3a3e50']};
+
+function build(n){
+  const d=LV[n],L={n,d,w:d.w,sol:[],coins:[],en:[],ro:[],sp:[],fa:[],items:[],hid:null,heart:null,chest:null};
+  d.gr.forEach(g=>L.sol.push({x:g[0],y:GY,w:g[1]-g[0],h:300,g:1}));
+  d.pf.forEach(p=>{L.sol.push({x:p[0],y:p[1],w:p[2],h:22,p:1});for(let i=0;i<3;i++)L.coins.push({x:p[0]+p[2]/2+(i-1)*36,y:p[1]-34});});
+  for(let i=0;i<d.gr.length-1;i++){const m=(d.gr[i][1]+d.gr[i+1][0])/2;[-1,0,1].forEach(k=>L.coins.push({x:m+k*42,y:GY-88-(k===0?24:0)}));}
+  (d.cn||[]).forEach(q=>{for(let i=0;i<q[1];i++)L.coins.push({x:q[0]+i*44,y:GY-30});});
+  d.it.forEach(q=>L.items.push({x:q[0],y:q[1],door:false,solved:false,cd:0}));
+  (d.doors||[]).forEach(x=>{const s={x:x,y:-300,w:44,h:GY+300,door:1};L.sol.push(s);L.items.push({x:x,y:GY,door:true,solved:false,cd:0,s:s,op:0});});
+  L.items.sort((a,b)=>a.x-b.x);
+  // koin yang menimpa benda tantangan dibuang
+  L.coins=L.coins.filter(k=>!L.items.some(it=>!it.door&&Math.abs(it.x-k.x)<30&&Math.abs(it.y-34-k.y)<30));
+  d.en.forEach((e,i)=>L.en.push({x:(e[0]+e[1])/2,y:GY-46,w:34,h:46,x1:e[0],x2:e[1],dir:i%2?1:-1,hp:e[2]?3:2,strong:e[2],st:'pat',t:0,cd:0,fl:0,sw:-1,i:i}));
+  d.ro.forEach(r=>L.ro.push({x:r[0]+30,x1:r[0],x2:r[1],dir:1,rot:0}));
+  d.sp.forEach(s=>L.sp.push({x:s[0],y:GY-16,w:s[1],h:16}));
+  d.fa.forEach((x,i)=>L.fa.push({x:x,y:30,st:'wait',t:0.6+i*0.5,vy:0}));
+  L.hid={x:d.hid[0],y:d.hid[1]-26,vis:false,got:false};
+  L.heart={x:d.heart[0],y:d.heart[1]-30,got:false};
+  if(d.chest)L.chest={x:d.chest,open:false,t:0};
+  return L;
+}
+
+/* ---------------- keadaan permainan ---------------- */
+let mode='menu',paused=false,T=0,G=null,parts=[],floats=[];
+const K={left:0,right:0,jumpP:0,atkP:0,spP:0,useP:0};
+function startLevel(n){
+  const L=build(n),qs=QB[n];
+  G={n,L,p:{x:60,y:GY-54,w:34,h:54,vx:0,vy:0,f:1,on:false,onS:null,coy:0,atkT:0,spT:0,spCd:0,inv:0,kb:0,kbv:0,swing:0,stepT:0},
+    lives:3,score:0,coins:0,solved:0,asked:0,correct:0,first:0,wrong:[],time:0,cam:0,safe:{x:60,y:GY-54},minX:0,maxX:L.w,
+    pool:shuffle([0,1,2,3,4]).concat(shuffle(qs.map((q,i)=>i).filter(i=>i>4))),qi:0,near:null,msg:'',msgT:0,sh:{x:10,y:GY},done:false,boss:null,endT:0};
+  if(n===5)G.boss={x:4740,y:GY,bars:3,st:'wait',t:0,shots:[],fl:0,shT:0,label:''};
+  parts=[];floats=[];mode='play';scr(null);music(n===5?'boss':'adv');
+  const d=LV[n];
+  dialog([{who:'Kenzo',text:d.mis},{who:'Kenzo',text:'Petunjuk matematika: '+d.tip},{who:'Shiro',text:'Aku ikut! Kalau muncul tanda seru di atas kepalaku, berarti ada benda tersembunyi di dekat kita.'}],()=>{toast(d.name+': mulai!');});
+}
+function nextQ(){const qs=QB[G.n],i=G.pool[G.qi%G.pool.length];G.qi++;return qs[i];}
+function toast(m){if(G){G.msg=m;G.msgT=3;}}
+function addScore(v,x,y){G.score+=v;floats.push({x:x,y:y,txt:'+'+v,life:1,col:'#ffe45c'});}
+function burst(x,y,col,n,sp){for(let i=0;i<n;i++){const a=rnd(0,6.28),v=rnd(40,sp||220);parts.push({x:x,y:y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-60,life:rnd(0.4,0.9),col:col,r:rnd(2,5)});}}
+
+function moveEnt(e,dt,L){
+  e.x+=e.vx*dt;
+  for(const s of L.sol){if(hit(e,s)){if(e.vx>0)e.x=s.x-e.w;else if(e.vx<0)e.x=s.x+s.w;}}
+  e.y+=e.vy*dt;e.on=false;e.onS=null;
+  for(const s of L.sol){if(hit(e,s)){if(e.vy>=0){e.y=s.y-e.h;e.on=true;e.onS=s;}else{e.y=s.y+s.h;}e.vy=0;}}
+}
+function hurt(pit,srcX){
+  const p=G.p;if(G.done)return;if(!pit&&(p.inv>0||p.spT>0))return;
+  G.lives--;sfx('hurt');p.inv=1.6;burst(p.x+p.w/2,p.y+20,'#ff6b6b',10);
+  if(pit){p.x=G.safe.x;p.y=G.safe.y;p.vx=p.vy=0;}
+  else{p.kb=0.25;p.kbv=((p.x+p.w/2)<(srcX==null?p.x+p.f*50:srcX)?-1:1)*230;p.vy=-320;}
+  if(G.lives<=0)gameOver();
+}
+function dmg(e,n){
+  e.hp-=n;e.fl=0.15;e.x=clamp(e.x+G.p.f*16,e.x1,e.x2-e.w);
+  if(e.hp<=0){e.dead=true;burst(e.x+17,e.y+20,'#ffd23f',16);burst(e.x+17,e.y+20,'#ff8a1f',12);addScore(20,e.x+17,e.y);sfx('boom');}else sfx('hitE');
+}
+function doUse(){
+  if(!G||paused||G.done||!G.near)return;const nr=G.near,L=G.L;
+  if(nr.t==='chest'){
+    if(G.solved>=L.d.need){L.chest.open=true;L.chest.t=0;G.done=true;G.endT=1.9;sfx('gem');addScore(250,L.chest.x,GY-70);burst(L.chest.x,GY-50,L.d.gc,30,300);}
+    else{toast('Peti masih terkunci! Selesaikan minimal '+L.d.need+' tantangan ('+G.solved+'/5).');sfx('no');}
+    return;
+  }
+  const it=nr.it;if(it.cd>0)return;const q=nextQ();
+  ask(q,'Tantangan '+Math.min(G.solved+1,L.items.length)+' dari '+L.items.length,(ok,first)=>{
+    record(q,ok,first);
+    if(ok){it.solved=true;G.solved++;addScore(first?100:50,it.x,it.y-60);
+      if(it.door){L.sol.splice(L.sol.indexOf(it.s),1);sfx('door');burst(it.x+22,GY-80,'#ffe45c',24);}
+      else{sfx('gem');burst(it.x,it.y-30,L.d.gc,20);}
+      if(L.chest&&G.solved===L.d.need)toast('Hebat! Peti permata di ujung jalan sudah bisa dibuka.');
+    }else{it.cd=1.2;toast(it.door?'Pintu masih terkunci. Coba lagi dengan soal lain!':'Belum berhasil. Coba lagi dengan soal lain!');}
+  });
+}
+function record(q,ok,first){G.asked++;if(ok){G.correct++;if(first)G.first++;}else if(G.wrong.indexOf(q.id)<0)G.wrong.push(q.id);}
+
+function update(dt){
+  const L=G.L,p=G.p,b=G.boss;G.time+=dt;
+  if(G.done){G.endT-=dt;if(L.chest)L.chest.t+=dt;if(G.endT<=0&&!G.fin){G.fin=true;levelDone();}updFx(dt);return;}
+  const lock=b&&(b.st==='finish');
+  let dir=lock?0:(K.right?1:0)-(K.left?1:0);
+  if(p.spT>0){p.spT-=dt;p.vx=p.f*620;}else{p.vx=dir*250;if(dir)p.f=dir;}
+  if(p.kb>0){p.kb-=dt;p.vx=p.kbv;}
+  p.coy=p.on?0.09:p.coy-dt;
+  if(K.jumpP&&p.coy>0&&!lock){p.vy=-640;p.coy=0;sfx('jump');}
+  if(K.atkP&&p.atkT<=0&&p.spT<=0&&!lock){p.atkT=0.28;p.swing++;sfx('sword');}
+  if(K.spP&&!lock){if(b&&b.st==='final')bossFinish();else if(p.spCd<=0&&p.spT<=0){p.spT=0.34;p.spCd=3;p.swing++;sfx('special');}}
+  if(K.useP)doUse();
+  if(paused)return;
+  p.atkT-=dt;p.spCd-=dt;p.inv-=dt;
+  p.vy=Math.min(p.vy+1700*dt,900);
+  moveEnt(p,dt,L);
+  p.x=clamp(p.x,G.minX,G.maxX-p.w);
+  if(p.on&&p.onS&&p.onS.g)G.safe={x:clamp(p.x,p.onS.x+24,p.onS.x+p.onS.w-24-p.w),y:GY-p.h};
+  if(p.on&&dir){p.stepT-=dt;if(p.stepT<=0){sfx('step');p.stepT=0.26;}}
+  if(p.y>H+80){hurt(true);if(mode!=='play'||paused)return;}
+  const pcx=p.x+p.w/2,pfy=p.y+p.h;
+  // musuh
+  for(const e of L.en){if(e.dead)continue;e.fl-=dt;e.cd-=dt;
+    const dx=pcx-(e.x+e.w/2),near=Math.abs(dx)<170&&Math.abs(pfy-(e.y+e.h))<70;
+    if(e.st==='pat'){e.x+=e.dir*(e.strong?105:60)*dt;if(e.x<e.x1){e.x=e.x1;e.dir=1;}if(e.x+e.w>e.x2){e.x=e.x2-e.w;e.dir=-1;}if(near&&e.cd<=0){e.st='wind';e.t=0.45;e.dir=dx>0?1:-1;}}
+    else if(e.st==='wind'){e.t-=dt;if(e.t<=0){e.st='lunge';e.t=0.4;sfx('enemy');}}
+    else{e.x=clamp(e.x+e.dir*250*dt,e.x1,e.x2-e.w);e.t-=dt;if(e.t<=0){e.st='pat';e.cd=1.6;}}
+    if(p.atkT>0&&e.sw!==p.swing){const hb={x:p.f>0?p.x+p.w-6:p.x-46,y:p.y-8,w:52,h:p.h+8};if(hit(hb,e)){e.sw=p.swing;dmg(e,1);}}
+    if(e.dead)continue;
+    if(p.spT>0){if(e.sw!==p.swing&&hit(p,e)){e.sw=p.swing;dmg(e,2);}}
+    else if(hit(p,e))hurt(false,e.x+e.w/2);
+  }
+  // rintangan
+  for(const r of L.ro){r.x+=r.dir*130*dt;r.rot+=r.dir*6*dt;if(r.x<r.x1+22){r.x=r.x1+22;r.dir=1;}if(r.x>r.x2-22){r.x=r.x2-22;r.dir=-1;}
+    if(hit(p,{x:r.x-19,y:GY-40,w:38,h:40}))hurt(false,r.x);}
+  for(const s of L.sp){if(hit(p,{x:s.x+6,y:s.y+4,w:s.w-12,h:s.h}))hurt(false,s.x+s.w/2);}
+  for(const f of L.fa){if(f.st==='wait'){f.t-=dt;if(f.t<=0){f.st='fall';f.y=30;f.vy=0;}}
+    else{f.vy+=1100*dt;f.y+=f.vy*dt;if(hit(p,{x:f.x-17,y:f.y-17,w:34,h:34}))hurt(false,f.x);if(f.y>=GY-18){burst(f.x,GY-10,'#b9a8ff',10,160);f.st='wait';f.t=1.9;f.y=30;if(Math.abs(f.x-pcx)<500)sfx('hitE');}}}
+  if(mode!=='play'||paused)return;
+  // koin, benda tersembunyi, hati
+  for(const k of L.coins){if(!k.got&&Math.abs(k.x-pcx)<26&&Math.abs(k.y-(p.y+p.h/2))<36){k.got=true;G.coins++;addScore(10,k.x,k.y);sfx('coin');burst(k.x,k.y,'#ffe45c',6,120);}}
+  const hd=L.hid;if(!hd.got){const d2=Math.hypot(hd.x-pcx,hd.y-(p.y+p.h/2));if(d2<130)hd.vis=true;if(hd.vis&&d2<38){hd.got=true;addScore(30,hd.x,hd.y);sfx('gem');burst(hd.x,hd.y,'#7ef0ff',18);toast('Kamu menemukan benda tersembunyi!');}}
+  const ht=L.heart;if(!ht.got&&G.lives<5&&Math.hypot(ht.x-pcx,ht.y-(p.y+p.h/2))<36){ht.got=true;G.lives++;sfx('gem');burst(ht.x,ht.y,'#ff6b8a',14);toast('Nyawa bertambah!');}
+  // benda tantangan
+  G.near=null;
+  for(const it of L.items){if(it.solved){if(it.door)it.op=Math.min(1,it.op+dt*2);continue;}it.cd-=dt;
+    const cx=it.door?it.x+22:it.x;
+    if(it.cd<=0&&Math.abs(pcx-cx)<(it.door?80:52)&&Math.abs(pfy-it.y)<54)G.near={t:'item',it:it};}
+  if(L.chest&&!L.chest.open&&Math.abs(pcx-L.chest.x)<64&&Math.abs(pfy-GY)<54)G.near={t:'chest'};
+  if(b)updBoss(dt);
+  // kamera dan Shiro
+  let tc=clamp(pcx-W*0.42,0,L.w-W);if(b&&b.st!=='wait')tc=L.w-W;
+  G.cam+=(tc-G.cam)*Math.min(1,dt*7);
+  G.sh.x+=((p.x+p.w/2-p.f*48)-G.sh.x)*Math.min(1,dt*4);G.sh.y+=(pfy-G.sh.y)*Math.min(1,dt*6);
+  G.msgT-=dt;updFx(dt);
+}
+function updFx(dt){
+  for(const q of parts){q.x+=q.vx*dt;q.y+=q.vy*dt;q.vy+=420*dt;q.life-=dt;}parts=parts.filter(q=>q.life>0);
+  for(const f of floats){f.y-=46*dt;f.life-=dt;}floats=floats.filter(f=>f.life>0);
+}
+/* ---------------- bos terakhir ---------------- */
+function updBoss(dt){
+  const b=G.boss,p=G.p,L=G.L;b.fl-=dt;
+  if(b.st==='wait'){
+    if(p.x>L.d.arena+60&&L.items.every(i=>i.solved)){b.st='talk';G.minX=L.d.arena;G.maxX=4640;
+      dialog([{who:'Master Shadow',text:'Jadi kamu ninja kecil yang berani masuk ke bentengku? Permata Emas tidak akan kuserahkan!'},{who:'Ryuka',text:'Aku tidak takut! Dengan ilmu data, perisaimu pasti bisa kutembus!'},{who:'Kenzo',text:'Tahap 1: lompati gelombang energi di bawah, dan jangan melompat saat gelombang datang dari atas. Setelah itu jawab soal untuk melemahkan perisainya!'}],()=>{b.st='dodge';b.t=7;b.shT=1;b.label='Tahap 1: Hindari serangan Master Shadow!';});}
+    return;
+  }
+  if(b.st==='dodge'){
+    b.t-=dt;b.shT-=dt;
+    if(b.shT<=0&&b.t>0.8){b.shT=rnd(0.95,1.35);const hi=Math.random()<0.35;b.shots.push({x:b.x-40,y:hi?GY-108:GY-22,hi:hi});sfx('enemy');}
+    if(b.t<=0&&b.shots.length===0){b.st='shield';b.t=0.9;b.label='Tahap 2: Perisai melemah! Jawab soalnya!';}
+  }else if(b.st==='shield'){
+    b.t-=dt;if(b.t<=0){b.st='ask';const q=nextQ();
+      ask(q,'Perisai bos: '+(4-b.bars)+' dari 3',(ok,first)=>{record(q,ok,first);
+        if(ok){b.bars--;b.fl=0.5;addScore(first?100:50,b.x,GY-150);sfx('boom');burst(b.x,GY-80,'#ff5252',30,320);burst(b.x,GY-80,'#ffe45c',20,260);
+          if(b.bars<=0){b.st='final';b.label='Tahap 3: Tekan K atau tombol JURUS untuk jurus terakhir!';}
+          else{b.st='dodge';b.t=5;b.shT=1;b.label='Perisai retak! Hindari serangan balasan!';}}
+        else{toast('Master Shadow menyerang balik!');p.inv=0;hurt(false,b.x);if(G.lives>0){b.st='dodge';b.t=5;b.shT=1.2;b.label='Hindari serangan, lalu coba soal berikutnya!';}}
+      });}
+  }else if(b.st==='finish'){
+    b.t-=dt;p.x+=(b.x-90-p.x)*Math.min(1,dt*6);p.spT=0.1;
+    if(b.t<=0&&!b.dead){b.dead=true;sfx('boom');sfx('gem');burst(b.x,GY-80,'#ff5252',50,420);burst(b.x,GY-80,'#ffe45c',40,360);burst(b.x,GY-80,'#fff',30,300);addScore(250,b.x,GY-160);G.done=true;G.endT=2.2;}
+  }
+  for(const s of b.shots){s.x-=330*dt;if(hit(p,{x:s.x-18,y:s.y-14,w:36,h:28}))hurt(false,s.x+40);}
+  b.shots=b.shots.filter(s=>s.x>L.d.arena-60);
+}
+function bossFinish(){const b=G.boss;b.st='finish';b.t=0.9;b.label='JURUS BAYANGAN TERAKHIR!';sfx('special');G.p.f=1;}
+
+/* ---------------- gambar latar ---------------- */
+function ridge(off,base,amp,col,seed){c.fillStyle=col;c.beginPath();c.moveTo(0,H);for(let x=0;x<=W;x+=16){const wx=x+off;c.lineTo(x,base-amp*(0.5+0.5*Math.sin(wx*0.004+seed)*Math.cos(wx*0.0017+seed*2))-amp*0.22*Math.sin(wx*0.011+seed*3));}c.lineTo(W,H);c.fill();}
+function sky(a,b){const g=c.createLinearGradient(0,0,0,H);g.addColorStop(0,a);g.addColorStop(1,b);c.fillStyle=g;c.fillRect(0,0,W,H);}
+function clouds(cam,col){c.fillStyle=col;for(let i=0;i<6;i++){const x=((i*230-cam*0.08+T*8)%(W+300)+W+300)%(W+300)-150,y=50+((i*53)%90);el(x,y,60,18);el(x+34,y-12,40,18);el(x-36,y-6,34,14);}}
+function rep(cam,par,step,fn){const off=cam*par,st=Math.floor(off/step)-1;for(let i=st;i<st+Math.ceil(W/step)+3;i++)fn(i*step-off,i);}
+function drawBG(th,cam){
+  if(th==='gunung'){
+    sky('#6cc5ff','#ffe9c4');c.fillStyle='rgba(255,244,190,.9)';el(760,90,46,46);c.fillStyle='rgba(255,244,190,.25)';el(760,90,70,70);
+    clouds(cam,'rgba(255,255,255,.85)');
+    ridge(cam*0.1,300,190,'#a9c0e6',1);ridge(cam*0.1+40,250,60,'rgba(255,255,255,.35)',1);
+    ridge(cam*0.22,370,150,'#7396c9',3);
+    rep(cam,0.22,900,(x)=>{const wx=x+420;c.fillStyle='rgba(255,255,255,.75)';c.fillRect(wx,250,26,200);c.fillStyle='rgba(180,230,255,.9)';for(let i=0;i<8;i++)c.fillRect(wx+4+(i%3)*7,250+((T*160+i*30)%200),3,16);});
+    ridge(cam*0.42,440,100,'#3f8a5c',5);
+    rep(cam,0.6,170,(x,i)=>{const h=70+((i*37)%40),s=Math.sin(T*1.5+i)*3;c.fillStyle='#5b3a1e';c.fillRect(x+60-3,GY-12,6,14);for(let k=0;k<3;k++){c.fillStyle=k%2?'#2c7a4b':'#256b40';c.beginPath();c.moveTo(x+60+s*(k+1)/3,GY-12-h+k*h*0.24);c.lineTo(x+60-26+k*4,GY-12-h*0.25+k*h*0.24-h*0.42+h*0.42);c.lineTo(x+60+26-k*4,GY-12-h*0.25+k*h*0.24);c.fill();}});
+  }else if(th==='laut'){
+    sky('#4dbcff','#dff8ff');c.fillStyle='rgba(255,250,210,.95)';el(170,90,42,42);clouds(cam,'rgba(255,255,255,.9)');
+    rep(cam,0.25,640,(x,i)=>{c.fillStyle='#4aa66a';el(x+300,310,110,34);c.fillStyle='#f6e2a0';el(x+300,318,120,16);c.strokeStyle='#7a5230';c.lineWidth=5;c.beginPath();c.moveTo(x+290,300);c.quadraticCurveTo(x+296,262,x+310+Math.sin(T+i)*3,240);c.stroke();c.fillStyle='#2f8f4e';for(let k=0;k<5;k++){c.save();c.translate(x+310+Math.sin(T+i)*3,240);c.rotate(-1.2+k*0.6+Math.sin(T*1.3+k)*0.05);el(18,0,20,5);c.restore();}});
+    for(let k=0;k<5;k++){c.fillStyle=['#2f8fd9','#2a82cc','#2576bd','#1f69ad','#1a5d9c'][k];c.beginPath();c.moveTo(0,H);for(let x=0;x<=W;x+=12)c.lineTo(x,318+k*30+Math.sin((x+cam*(0.3+k*0.1))*0.02+T*(1.4+k*0.3)+k)*5);c.lineTo(W,H);c.fill();}
+    rep(cam,0.5,1500,(x)=>{const wx=x+700;c.fillStyle='#5a3d22';c.beginPath();c.moveTo(wx,400);c.lineTo(wx+190,380);c.lineTo(wx+170,440);c.lineTo(wx+20,445);c.fill();c.fillRect(wx+70,300,8,95);c.fillStyle='rgba(240,230,200,.8)';c.beginPath();c.moveTo(wx+78,305);c.lineTo(wx+130,340);c.lineTo(wx+78,360);c.fill();});
+  }else if(th==='lembah'){
+    sky('#8fe0b0','#f6ffd9');clouds(cam,'rgba(255,255,255,.8)');
+    ridge(cam*0.1,320,170,'#8fcf9a',2);ridge(cam*0.22,390,130,'#5fae6e',4);
+    rep(cam,0.22,1100,(x)=>{const wx=x+500;c.fillStyle='rgba(255,255,255,.7)';c.fillRect(wx,290,22,160);});
+    rep(cam,0.35,1000,(x)=>{const wx=x+300;c.fillStyle='#b8b3a6';for(let k=0;k<4;k++)c.fillRect(wx+k*44,330-(k%2)*26,18,120+(k%2)*26);c.fillStyle='#9d978a';c.fillRect(wx-10,322,160,12);c.fillStyle='#7d2f2f';c.beginPath();c.moveTo(wx-26,322);c.lineTo(wx+64,286);c.lineTo(wx+166,322);c.fill();});
+    ridge(cam*0.45,450,70,'#3f8f4f',6);
+    rep(cam,0.65,70,(x,i)=>{const s=Math.sin(T*1.4+i*0.7)*5,h=190+((i*53)%120);c.strokeStyle=i%2?'#3fa34d':'#58bd5f';c.lineWidth=7;c.beginPath();c.moveTo(x+30,GY);c.quadraticCurveTo(x+30+s*0.4,GY-h/2,x+30+s,GY-h);c.stroke();c.strokeStyle='rgba(0,0,0,.18)';c.lineWidth=2;for(let k=1;k<5;k++){const y=GY-k*h/5;c.beginPath();c.moveTo(x+26,y);c.lineTo(x+34,y);c.stroke();}c.fillStyle='#6fd070';c.save();c.translate(x+30+s,GY-h);c.rotate(0.5+s*0.02);el(14,0,16,4);c.rotate(-1.4);el(14,0,14,4);c.restore();});
+    c.fillStyle='rgba(255,255,255,.14)';for(let k=0;k<3;k++)el(((k*400-cam*0.3+T*14)%1400+1400)%1400-200,380+k*20,260,18);
+  }else if(th==='gua'){
+    sky('#140b2b','#3a1d5e');
+    rep(cam,0.2,120,(x,i)=>{const h=50+((i*71)%110);c.fillStyle='#24143f';c.beginPath();c.moveTo(x,0);c.lineTo(x+60,h);c.lineTo(x+120,0);c.fill();});
+    c.fillStyle='rgba(90,200,255,.16)';el(W/2,H+40,700,160);
+    rep(cam,0.45,260,(x,i)=>{const col=['#b56bff','#5ce1ff','#ff7ad9','#7dffb0'][((i%4)+4)%4],a=0.45+0.3*Math.sin(T*2+i);c.save();c.globalAlpha=a;c.shadowColor=col;c.shadowBlur=24;c.fillStyle=col;const bx=x+130,by=GY-10;c.beginPath();c.moveTo(bx,by);c.lineTo(bx-14,by-40);c.lineTo(bx,by-78-((i*29)%30));c.lineTo(bx+14,by-40);c.fill();c.beginPath();c.moveTo(bx+22,by);c.lineTo(bx+14,by-24);c.lineTo(bx+26,by-46);c.lineTo(bx+36,by-22);c.fill();c.restore();});
+    rep(cam,0.7,200,(x,i)=>{const h=30+((i*43)%70);c.fillStyle='#2e1b52';c.beginPath();c.moveTo(x+20,0);c.lineTo(x+56,h);c.lineTo(x+92,0);c.fill();});
+    for(let i=0;i<24;i++){c.fillStyle='rgba(200,180,255,'+(0.25+0.25*Math.sin(T*2+i))+')';el(((i*97-cam*0.5)%W+W)%W,60+((i*61)%330)+Math.sin(T+i)*8,2,2);}
+  }else{
+    sky('#24103a','#d1502e');c.fillStyle='rgba(255,236,200,.95)';el(740,110,50,50);c.fillStyle='rgba(255,236,200,.18)';el(740,110,84,84);
+    ridge(cam*0.1,360,150,'#3a1a44',2);
+    rep(cam,0.28,520,(x,i)=>{const wx=x+200,h=150+((i*47)%70);c.fillStyle='#1d1230';c.fillRect(wx,GY-h,90,h);for(let k=0;k<3;k++){const y=GY-h-k*34;c.fillRect(wx+10+k*8,y-22,70-k*16,22);c.beginPath();c.moveTo(wx-18+k*8,y);c.lineTo(wx+45,y-18);c.lineTo(wx+108-k*8,y);c.fill();}c.fillStyle='rgba(255,200,90,'+(0.5+0.3*Math.sin(T*3+i))+')';c.fillRect(wx+20,GY-h+30,12,18);c.fillRect(wx+56,GY-h+70,12,18);});
+    ridge(cam*0.45,460,60,'#150c22',7);
+    rep(cam,0.7,330,(x,i)=>{const wx=x+150;c.fillStyle='#2a2233';c.fillRect(wx-3,GY-90,6,90);c.fillStyle='rgba(255,170,60,.9)';el(wx,GY-98+Math.sin(T*9+i)*2,7,11+Math.sin(T*11+i)*2);c.fillStyle='rgba(255,220,120,.25)';el(wx,GY-96,26,26);c.fillStyle='#b0202c';c.fillRect(wx+70,GY-150,4,150);c.beginPath();c.moveTo(wx+74,GY-148);c.lineTo(wx+110+Math.sin(T*3+i)*6,GY-134);c.lineTo(wx+74,GY-112);c.fill();});
+  }
+}
+function drawWorld(){
+  const L=G.L,th=L.d.th,cam=Math.round(G.cam),gc=GROUND[th],p=G.p;
+  drawBG(th,cam);
+  // dasar jurang
+  if(th==='laut'||th==='gua'){c.fillStyle=th==='laut'?'#1a6fc0':'rgba(70,190,255,.45)';c.beginPath();c.moveTo(0,H);for(let x=0;x<=W;x+=12)c.lineTo(x,GY+26+Math.sin((x+cam)*0.03+T*2.4)*5);c.lineTo(W,H);c.fill();}
+  else{const g=c.createLinearGradient(0,GY,0,H);g.addColorStop(0,'rgba(10,10,30,0)');g.addColorStop(1,'rgba(10,10,30,.75)');c.fillStyle=g;c.fillRect(0,GY,W,H-GY);}
+  c.save();c.translate(-cam,0);
+  // tanah dan pijakan
+  for(const s of L.sol){if(s.x+s.w<cam-50||s.x>cam+W+50)continue;
+    if(s.g){const g=c.createLinearGradient(0,GY,0,H);g.addColorStop(0,gc[1]);g.addColorStop(1,gc[2]);c.fillStyle=g;c.fillRect(s.x,GY,s.w,H-GY);
+      c.fillStyle='rgba(0,0,0,.16)';for(let x=Math.ceil(s.x/60)*60;x<s.x+s.w-10;x+=60){c.fillRect(x+8,GY+30+((x/60)%2)*18,26,7);}
+      c.fillStyle='rgba(0,0,0,.25)';c.fillRect(s.x,GY,6,H-GY);c.fillRect(s.x+s.w-6,GY,6,H-GY);
+      c.fillStyle=gc[0];rr(s.x-3,GY-7,s.w+6,20,8);c.fill();c.fillStyle='rgba(255,255,255,.4)';rr(s.x+2,GY-5,s.w-4,5,3);c.fill();
+      c.fillStyle='rgba(0,0,0,.2)';c.fillRect(s.x,GY+11,s.w,4);}
+    else if(s.p){c.fillStyle='rgba(0,0,0,.25)';rr(s.x+5,s.y+8,s.w,s.h,7);c.fill();
+      const g=c.createLinearGradient(0,s.y,0,s.y+s.h);g.addColorStop(0,th==='gua'?'#8f7fd6':th==='benteng'?'#8b90a6':'#c99555');g.addColorStop(1,th==='gua'?'#4a3d7a':th==='benteng'?'#4a4f63':'#7d5529');
+      c.fillStyle=g;rr(s.x,s.y,s.w,s.h,7);c.fill();c.fillStyle='rgba(255,255,255,.4)';rr(s.x+4,s.y+2,s.w-8,4,2);c.fill();
+      c.fillStyle='rgba(0,0,0,.2)';for(let x=s.x+s.w/3;x<s.x+s.w-6;x+=s.w/3)c.fillRect(x,s.y+2,2,s.h-4);}
+  }
+  // pintu dan gerbang
+  for(const it of L.items){if(!it.door)continue;const o=it.op||0;if(o>=1)continue;c.save();c.globalAlpha=1-o;c.translate(0,-o*120);
+    const x=it.x,iron=L.n===5;const g=c.createLinearGradient(x,0,x+44,0);g.addColorStop(0,iron?'#70778c':'#6a55b0');g.addColorStop(1,iron?'#3b4052':'#35285f');
+    c.fillStyle=g;rr(x,GY-230,44,230,6);c.fill();c.fillStyle='rgba(0,0,0,.3)';c.fillRect(x,-300,44,GY-230+300);
+    c.strokeStyle='rgba(255,255,255,.25)';c.lineWidth=2;for(let y=GY-210;y<GY;y+=38){c.strokeRect(x+6,y,32,28);}
+    c.fillStyle='#ffd23f';c.shadowColor='#ffd23f';c.shadowBlur=14+Math.sin(T*5)*6;el(x+22,GY-120,9,9);c.shadowBlur=0;c.fillStyle='#5a2a00';c.font='bold 13px sans-serif';c.textAlign='center';c.fillText('?',x+22,GY-115);
+    c.restore();}
+  // duri
+  for(const s of L.sp){c.fillStyle=th==='laut'?'#ff8f70':'#cfd6e6';for(let x=s.x;x<s.x+s.w-2;x+=12){c.beginPath();c.moveTo(x,GY-4);c.lineTo(x+6,GY-20);c.lineTo(x+12,GY-4);c.fill();}c.fillStyle='rgba(0,0,0,.25)';c.fillRect(s.x,GY-6,s.w,3);}
+  // benda tantangan
+  for(const it of L.items){if(it.door||it.solved)continue;const y=it.y-30+Math.sin(T*3+it.x)*4,x=it.x;
+    c.fillStyle='rgba(255,240,150,'+(0.22+0.1*Math.sin(T*4))+')';el(x,y,30,30);
+    if(L.n===1){c.fillStyle='#fff1c9';rr(x-15,y-11,30,22,5);c.fill();c.strokeStyle='#b9741f';c.lineWidth=2.5;c.stroke();c.fillStyle='#b3440b';c.fillRect(x-15,y-3,30,5);c.fillStyle='#b9741f';el(x-15,y,4,11);el(x+15,y,4,11);}
+    else if(L.n===2){c.fillStyle='#ffb6c9';c.beginPath();c.arc(x,y+6,17,Math.PI,0);c.fill();c.fillStyle='#ff8fab';c.beginPath();c.arc(x,y+6,17,0,Math.PI);c.fill();c.fillStyle='#fff';c.shadowColor='#fff';c.shadowBlur=12;el(x,y+2,8,8);c.shadowBlur=0;}
+    else if(L.n===3){c.fillStyle='#8d8a80';rr(x-15,y-17,30,34,8);c.fill();c.strokeStyle='#7ef0a0';c.shadowColor='#7ef0a0';c.shadowBlur=10;c.lineWidth=3;c.beginPath();c.moveTo(x-6,y-8);c.lineTo(x+6,y-8);c.lineTo(x-6,y+8);c.lineTo(x+6,y+8);c.stroke();c.shadowBlur=0;}
+    else gemShape(x,y,15,'#5ce1ff',T);
+  }
+  // peti permata
+  if(L.chest){const ch=L.chest,x=ch.x;c.fillStyle='rgba(0,0,0,.25)';el(x,GY,38,7);
+    if(ch.open){c.fillStyle='rgba(255,240,150,.5)';c.beginPath();c.moveTo(x-20,GY-34);c.lineTo(x-70,GY-260);c.lineTo(x+70,GY-260);c.lineTo(x+20,GY-34);c.fill();gemShape(x,GY-70-Math.min(ch.t,1)*70,22,L.d.gc,T);}
+    c.fillStyle='#a85e14';rr(x-30,GY-34,60,34,5);c.fill();c.fillStyle='#ffd23f';c.fillRect(x-30,GY-22,60,5);c.fillRect(x-5,GY-34,10,34);
+    c.save();c.translate(x-30,GY-34);c.rotate(ch.open?-1.1:0);c.fillStyle='#c97a22';rr(0,-20,60,22,10);c.fill();c.fillStyle='#ffd23f';c.fillRect(25,-20,10,22);c.restore();
+    if(!ch.open){c.fillStyle='#5a2a00';el(x,GY-18,5,6);}}
+  // koin
+  for(const k of L.coins){if(k.got||k.x<cam-30||k.x>cam+W+30)continue;const sx=Math.abs(Math.cos(T*4+k.x*0.02));c.fillStyle='#e0a100';el(k.x,k.y+Math.sin(T*3+k.x)*2,10*sx+1.5,11);c.fillStyle='#ffe45c';el(k.x,k.y+Math.sin(T*3+k.x)*2,7.5*sx+1,8.5);c.fillStyle='#fff';el(k.x-2*sx,k.y-3,1.6,2.6);}
+  const hd=L.hid;if(hd.vis&&!hd.got){gemShape(hd.x,hd.y+Math.sin(T*4)*3,12,'#7ef0ff',T);}
+  const ht=L.heart;if(!ht.got)heart(ht.x,ht.y+Math.sin(T*3)*3,13,'#ff4d6d');
+  // batu bergulir / ombak
+  for(const r of L.ro){c.save();c.translate(r.x,GY-21);c.fillStyle='rgba(0,0,0,.25)';el(0,21,22,5);c.rotate(r.rot);
+    if(th==='laut'){c.fillStyle='#3aa0ff';c.beginPath();c.arc(0,0,21,0,7);c.fill();c.fillStyle='#bfe6ff';el(-6,-6,7,7);c.fillStyle='#fff';el(8,4,4,4);}
+    else if(th==='lembah'){c.fillStyle='#8a5a2b';c.beginPath();c.arc(0,0,21,0,7);c.fill();c.strokeStyle='#5b3a1e';c.lineWidth=3;c.beginPath();c.arc(0,0,13,0,7);c.stroke();c.beginPath();c.arc(0,0,6,0,7);c.stroke();}
+    else{c.fillStyle='#8e96a8';c.beginPath();c.arc(0,0,21,0,7);c.fill();c.fillStyle='#b9c1d1';el(-6,-7,8,6);c.fillStyle='#6a7184';el(7,6,6,5);el(-9,8,4,3);}
+    c.restore();}
+  for(const f of L.fa){if(f.st==='wait'){if(f.t<0.8){c.fillStyle='rgba(255,80,80,'+(0.3+0.3*Math.sin(T*30))+')';el(f.x,GY-2,22,5);c.fillStyle='#6a5a9a';el(f.x+Math.sin(T*50)*2,22,16,14);}}
+    else{c.fillStyle='#6a5a9a';c.beginPath();c.moveTo(f.x-17,f.y-12);c.lineTo(f.x+12,f.y-17);c.lineTo(f.x+18,f.y+6);c.lineTo(f.x,f.y+18);c.lineTo(f.x-16,f.y+8);c.fill();c.fillStyle='#9f90e6';el(f.x-4,f.y-5,6,5);}}
+  // musuh
+  for(const e of L.en){if(e.dead||e.x<cam-80||e.x>cam+W+80)continue;const ex=e.x+e.w/2,ey=e.y+e.h,wind=e.st==='wind';
+    if(e.fl>0)c.globalAlpha=0.5;
+    const isBlob=(L.n===4&&!e.strong)||(L.n===2&&!e.strong&&e.i%2===0);
+    if(isBlob)blob(ex+(wind?Math.sin(T*60)*2:0),ey,L.n===4?'#c79bff':'#48d6c0',L.n===4?'#6a3fb0':'#1f8a7a',T+e.i,e.dir,e.fl>0);
+    else ninja(ex+(wind?Math.sin(T*60)*2:0),ey,{pal:e.strong?PAL.kage:PAL['e'+(L.n===4?5:L.n)]||PAL.e1,f:e.dir,t:T+e.i,pose:e.st==='lunge'?'atk':'run',ap:0.5,sword:1,swc:e.strong?'#c9a0ff':'#dfe6f0',s:e.strong?1.08:0.95});
+    c.globalAlpha=1;
+    if(wind){c.fillStyle='#ff3b3b';c.font='bold 22px sans-serif';c.textAlign='center';c.fillText('!',ex,e.y-22);}
+    if(e.strong){c.fillStyle='rgba(0,0,0,.5)';c.fillRect(ex-18,e.y-30,36,5);c.fillStyle='#a45cff';c.fillRect(ex-18,e.y-30,36*e.hp/3,5);}
+  }
+  // bos
+  const b=G.boss;if(b&&!b.dead){
+    if(b.fl>0&&Math.sin(T*50)>0)c.globalAlpha=0.4;
+    ninja(b.x,b.y,{pal:PAL.boss,s:2.3,f:-1,t:T,pose:b.st==='dodge'?'atk':'idle',ap:(Math.sin(T*5)+1)/2,sword:1,swc:'#ff5252',aura:1});c.globalAlpha=1;
+    if(b.bars>0&&b.st!=='wait'){c.strokeStyle='rgba(255,90,90,'+(0.35+0.2*Math.sin(T*6))+')';c.lineWidth=4+b.bars;c.beginPath();c.ellipse(b.x,b.y-70,70,96,0,0,7);c.stroke();}
+    for(const s of b.shots){c.save();c.translate(s.x,s.y);c.shadowColor=s.hi?'#c06bff':'#ff5252';c.shadowBlur=18;c.fillStyle=s.hi?'#c06bff':'#ff5252';c.beginPath();c.moveTo(-22,0);c.quadraticCurveTo(0,-18,26,-6);c.quadraticCurveTo(8,0,26,6);c.quadraticCurveTo(0,18,-22,0);c.fill();c.fillStyle='#fff';el(-8,0,6,4);c.restore();}
+  }
+  // Shiro dan Ryuka
+  rabbit(G.sh.x,G.sh.y,T,p.f);
+  if(!hd.got&&Math.hypot(hd.x-(p.x+17),hd.y-(p.y+27))<360){c.fillStyle='#fff';rr(G.sh.x-10,G.sh.y-74,20,22,7);c.fill();c.fillStyle='#e02424';c.font='bold 18px sans-serif';c.textAlign='center';c.fillText('!',G.sh.x,G.sh.y-57);}
+  if(!(p.inv>0&&Math.sin(T*40)>0)){
+    if(p.spT>0){for(let i=1;i<=3;i++){c.globalAlpha=0.22/i*2;ninja(p.x+p.w/2-p.f*i*22,p.y+p.h,{pal:PAL.ryuka,f:p.f,t:T,pose:'run',sword:1});}c.globalAlpha=1;}
+    const pose=G.done?'win':p.atkT>0?'atk':!p.on?'jump':(Math.abs(p.vx)>10?'run':'idle');
+    ninja(p.x+p.w/2,p.y+p.h,{pal:PAL.ryuka,f:p.f,t:T,pose:pose,ap:clamp(p.atkT/0.28,0,1),sword:1,pack:1});
+    if(p.atkT>0){c.save();c.translate(p.x+p.w/2+p.f*26,p.y+22);c.scale(p.f,1);c.strokeStyle='rgba(255,255,255,'+(p.atkT/0.28)+')';c.lineWidth=5;c.beginPath();c.arc(0,0,30,-1.1,1.1);c.stroke();c.restore();}
+  }
+  for(const q of parts){c.globalAlpha=clamp(q.life*1.6,0,1);c.fillStyle=q.col;el(q.x,q.y,q.r,q.r);}c.globalAlpha=1;
+  c.font='900 20px "Trebuchet MS",sans-serif';c.textAlign='center';
+  for(const f of floats){c.globalAlpha=clamp(f.life*2,0,1);c.lineWidth=4;c.strokeStyle='#5a2a00';c.strokeText(f.txt,f.x,f.y);c.fillStyle=f.col;c.fillText(f.txt,f.x,f.y);}c.globalAlpha=1;
+  c.restore();
+  drawHUD();
+}
+function heart(x,y,r,col){c.fillStyle=col;c.beginPath();c.moveTo(x,y+r*0.9);c.bezierCurveTo(x-r*1.6,y-r*0.2,x-r*0.8,y-r*1.3,x,y-r*0.4);c.bezierCurveTo(x+r*0.8,y-r*1.3,x+r*1.6,y-r*0.2,x,y+r*0.9);c.fill();c.fillStyle='rgba(255,255,255,.5)';el(x-r*0.45,y-r*0.45,r*0.22,r*0.16);}
+function drawHUD(){
+  const L=G.L,d=L.d;
+  c.fillStyle='rgba(15,18,50,.62)';rr(10,10,318,64,14);c.fill();
+  for(let i=0;i<Math.max(3,G.lives);i++)heart(34+i*30,32,11,i<G.lives?'#ff4d6d':'rgba(255,255,255,.22)');
+  c.textAlign='left';c.font='900 19px "Trebuchet MS",sans-serif';c.fillStyle='#fff';c.fillText('Skor: '+G.score,22,65);
+  c.fillStyle='#ffe45c';el(196,59,8,8);c.fillStyle='#fff';c.fillText(G.coins,210,65);
+  // jurus
+  const cd=clamp(G.p.spCd/3,0,1);c.fillStyle='rgba(255,255,255,.2)';rr(250,50,66,12,6);c.fill();c.fillStyle=cd>0?'#8aa0c8':'#5ce1ff';rr(250,50,66*(1-cd),12,6);c.fill();c.font='bold 11px sans-serif';c.fillStyle='#fff';c.fillText('JURUS',250,44);
+  // tengah
+  c.textAlign='center';c.fillStyle='rgba(15,18,50,.62)';rr(W/2-150,10,300,50,14);c.fill();
+  c.font='900 17px "Trebuchet MS",sans-serif';c.fillStyle='#ffd23f';c.fillText('Level '+L.n+': '+d.name,W/2,30);
+  c.font='bold 14px "Trebuchet MS",sans-serif';c.fillStyle='#fff';
+  const lab=L.n===5?'Gerbang':L.n===4?'Pintu dan kristal':d.item.charAt(0).toUpperCase()+d.item.slice(1);
+  c.fillText(lab+': '+G.solved+'/'+L.items.length+(L.chest?'   (butuh '+d.need+')':''),W/2,50);
+  // kemajuan
+  const pr=clamp((G.p.x)/(L.w-100),0,1);c.fillStyle='rgba(255,255,255,.25)';rr(W/2-150,64,300,6,3);c.fill();c.fillStyle='#7ef0a0';rr(W/2-150,64,300*pr,6,3);c.fill();
+  // bos
+  const b=G.boss;if(b&&b.st!=='wait'&&!b.dead){c.fillStyle='rgba(15,18,50,.7)';rr(W/2-220,84,440,58,12);c.fill();c.font='900 15px "Trebuchet MS",sans-serif';c.fillStyle='#ff8a8a';c.fillText('MASTER SHADOW',W/2,102);
+    for(let i=0;i<3;i++){c.fillStyle=i<b.bars?'#e02424':'rgba(255,255,255,.18)';rr(W/2-150+i*102,108,96,10,5);c.fill();}
+    c.font='bold 13px "Trebuchet MS",sans-serif';c.fillStyle='#fff';c.fillText(b.label,W/2,135);}
+  if(G.msgT>0){c.globalAlpha=clamp(G.msgT,0,1);c.font='900 18px "Trebuchet MS",sans-serif';const w=Math.min(W-40,c.measureText(G.msg).width+40);c.fillStyle='rgba(15,18,50,.8)';rr(W/2-w/2,H-96,w,36,12);c.fill();c.fillStyle='#fff';c.fillText(G.msg,W/2,H-72,W-60);c.globalAlpha=1;}
+}
+
+/* ---------------- adegan judul, cerita, akhir ---------------- */
+function castle(x,y,s){c.save();c.translate(x,y);c.scale(s,s);c.fillStyle='#f4ead2';c.fillRect(-50,-90,100,90);for(let k=0;k<3;k++){const yy=-90-k*46,w=70-k*16;c.fillStyle='#f4ead2';c.fillRect(-w/2+6,yy-34,w-12,34);c.fillStyle='#c0392b';c.beginPath();c.moveTo(-w/2-22,yy);c.lineTo(0,yy-20);c.lineTo(w/2+22,yy);c.fill();}c.fillStyle='#7a5230';c.fillRect(-12,-34,24,34);c.restore();}
+const GEMC=['#3ddc84','#39a7ff','#ff4d5e','#b56bff','#ffcf3d'];
+function drawTitle(){
+  drawBG('gunung',T*20);castle(700,GY-6,1.25);
+  c.fillStyle='#86e05c';rr(-10,GY-8,W+20,H,10);c.fill();c.fillStyle='#8a6a4a';c.fillRect(0,GY+12,W,H);
+  for(let i=0;i<5;i++)gemShape(580+i*60,150+Math.sin(T*2+i)*10,13,GEMC[i],T+i);
+  ninja(170,GY+2,{pal:PAL.ryuka,s:2.5,t:T,pose:'idle',sword:1,pack:1});rabbit(290,GY+2,T,1);
+  for(let i=0;i<26;i++){c.fillStyle='rgba(255,250,200,'+(0.35+0.3*Math.sin(T*2+i))+')';el((i*137+T*18)%W,(i*71+Math.sin(T+i)*20)%H,2.2,2.2);}
+}
+let storyI=0;
+function drawStory(){
+  const t=T;
+  if(storyI===0){drawBG('gunung',200);castle(480,GY-6,1.6);c.fillStyle='#86e05c';c.fillRect(0,GY-6,W,H);for(let i=0;i<5;i++)gemShape(480+Math.cos(t+i*1.256)*190,170+Math.sin(t+i*1.256)*60,18,GEMC[i],t+i);}
+  else if(storyI===1){drawBG('benteng',300);castle(480,GY-6,1.6);c.fillStyle='#3a3e50';c.fillRect(0,GY-6,W,H);for(let i=0;i<5;i++){const k=(t*0.5+i*0.13)%1;gemShape(480+(i-2)*60+k*(i-2)*260,190-k*260,16,GEMC[i],t);ninja(200+i*140,GY-6-Math.abs(Math.sin(t*3+i))*50,{pal:PAL.e5,t:t+i,pose:'jump',f:i%2?1:-1,sword:1});}c.fillStyle='rgba(20,0,30,.35)';c.fillRect(0,0,W,H);}
+  else if(storyI===2){drawBG('benteng',800);c.fillStyle='#3a3e50';c.fillRect(0,GY-6,W,H);ninja(520,GY-4,{pal:PAL.boss,s:3,t:t,aura:1,sword:1,swc:'#ff5252',f:-1});ninja(300,GY-4,{pal:PAL.kage,s:1.5,t:t+1,sword:1,swc:'#c9a0ff'});c.fillStyle='rgba(20,0,30,.25)';c.fillRect(0,0,W,H);}
+  else if(storyI===3){drawBG('gunung',500);c.fillStyle='#86e05c';c.fillRect(0,GY-6,W,H);ninja(400,GY-4,{pal:PAL.ryuka,s:2.2,t:t,sword:1,pack:1});ninja(580,GY-4,{pal:PAL.kenzo,s:2.2,t:t+2,f:-1,glasses:1,scroll:1});}
+  else{drawBG('gunung',700);c.fillStyle='#86e05c';c.fillRect(0,GY-6,W,H);ninja(420,GY-4,{pal:PAL.ryuka,s:2.2,t:t,pose:'win',sword:1,pack:1});ninja(600,GY-4,{pal:PAL.kenzo,s:2,t:t+1,pose:'win',f:-1,glasses:1});c.save();c.translate(300,GY-4);c.scale(2,2);rabbit(0,0,t,1);c.restore();}
+}
+const STORY=[
+ {who:'Narator',text:'Di kerajaan ninja bernama SHINOBI LAND, lima permata matematika menjaga keseimbangan dunia.',s:0},
+ {who:'Narator',text:'Suatu malam, sekelompok ninja jahat bernama SHADOW CLAN mencuri kelima permata itu!',s:1},
+ {who:'Narator',text:'Dunia ninja menjadi kacau. Gunung kehilangan keseimbangan, lautan dipenuhi badai, lembah tertutup kabut, dan benteng kerajaan dikuasai musuh.',s:1},
+ {who:'Master Shadow',text:'Ha ha ha! Tanpa permata, tak ada lagi yang bisa membaca dan mengurutkan data di negeri ini!',s:2},
+ {who:'Kenzo',text:'Ryuka, hanya kamu harapan kami. Jelajahi lima wilayah dan rebut kembali kelima permata. Aku akan memandumu dengan peta ini.',s:3},
+ {who:'Ryuka',text:'Aku siap! Aku akan mengumpulkan koin, melewati jebakan, dan menjawab setiap tantangan matematika.',s:3},
+ {who:'Shiro',text:'Aku ikut! Bersama-sama kita pasti bisa menemukan harta karun legendaris!',s:4}];
+let endT=0;
+function drawEnding(dt){
+  endT+=dt;drawBG('gunung',300+endT*10);castle(480,GY-6,1.7);c.fillStyle='#86e05c';c.fillRect(0,GY-6,W,H);
+  const k=clamp(endT/3,0,1),R=170*(1-k)+10;
+  c.fillStyle='rgba(255,245,180,'+(0.25+0.35*k)+')';el(480,290,50+k*60,50+k*60);
+  for(let i=0;i<5;i++)gemShape(480+Math.cos(endT*2+i*1.256)*R,290+Math.sin(endT*2+i*1.256)*R*0.5,18,GEMC[i],endT+i);
+  if(k>=1){star(480,290,30+Math.sin(endT*5)*5,'#fff6b0');}
+  ninja(380,GY-4,{pal:PAL.ryuka,s:2,t:endT,pose:'win',sword:1,pack:1});ninja(560,GY-4,{pal:PAL.kenzo,s:1.9,t:endT+1,pose:'win',f:-1,glasses:1});
+  ninja(690,GY-4,{pal:PAL.kage,s:1.6,t:endT+2,pose:'idle',f:-1});
+  c.save();c.translate(270,GY-4);c.scale(1.9,1.9);rabbit(0,0,endT,1);c.restore();
+  if(Math.random()<0.5)parts.push({x:rnd(0,W),y:-10,vx:rnd(-30,30),vy:rnd(40,120),life:3.5,col:GEMC[Math.random()*5|0],r:rnd(3,6)});
+  for(const q of parts){q.x+=q.vx*dt;q.y+=q.vy*dt;q.life-=dt;c.fillStyle=q.col;c.fillRect(q.x,q.y,q.r,q.r*1.6);}parts=parts.filter(q=>q.life>0);
+}
+
+/* ---------------- layar dan dialog ---------------- */
+function scr(id){document.querySelectorAll('.ov').forEach(o=>o.classList.toggle('on',o.id===id));document.body.classList.toggle('play',mode==='play'&&!id);if(mode==='play')paused=!!id;}
+let DQ=null;
+function dialog(lines,done){DQ={lines:lines,i:0,done:done};scr('dlg');showLine();}
+function showLine(){const l=DQ.lines[DQ.i];$('dwho').textContent=l.who;$('dtext').textContent=l.text;if(l.s!=null)storyI=l.s;portrait(l.who);$('dSkip').style.display=DQ.lines.length>2?'':'none';}
+function dlgNext(skip){if(!DQ)return;sfx('click');DQ.i++;if(skip||DQ.i>=DQ.lines.length){const d=DQ.done;DQ=null;scr(null);d&&d();}else showLine();}
+$('dNext').onclick=()=>dlgNext(false);$('dSkip').onclick=()=>dlgNext(true);
+
+/* ---------------- panel soal ---------------- */
+const PUJI=['Hebat! Ninja cerdas!','Luar biasa! Jawabanmu tepat!','Mantap! Kamu teliti membaca data!','Keren! Terus pertahankan!'];
+let QS=null;
+function ask(q,label,cb){
+  QS={q:q,cb:cb,tries:0,done:false};scr('qp');paused=true;
+  $('qprog').textContent=label;$('qtext').textContent=q.q;
+  const tb=$('qtab');tb.innerHTML='';
+  if(q.t){tb.style.display='';const hr=tb.insertRow();q.t.h.forEach(h=>{const th=document.createElement('th');th.textContent=h;hr.appendChild(th);});q.t.r.forEach(r=>{const tr=tb.insertRow();r.forEach(v=>{tr.insertCell().textContent=v;});});}else tb.style.display='none';
+  const fb=$('qfb');fb.className='';fb.innerHTML='';$('qNext').style.display='none';
+  const box=$('qopts');box.innerHTML='';
+  shuffle([0,1,2,3]).forEach((oi,k)=>{const b=document.createElement('button');b.className='opt';b.textContent='ABCD'[k]+'. '+q.o[oi];b.dataset.ok=oi===q.a?'1':'0';b.onclick=()=>pick(b,oi);box.appendChild(b);});
+}
+function pick(b,oi){
+  const s=QS;if(!s||s.done||b.disabled)return;const q=s.q,fb=$('qfb');s.tries++;
+  const lock=()=>{document.querySelectorAll('#qopts .opt').forEach(x=>{x.disabled=true;if(x.dataset.ok==='1')x.classList.add('ok');});$('qNext').style.display='';};
+  if(oi===q.a){s.done=true;s.ok=true;b.classList.add('ok','pop');lock();sfx('ok');
+    fb.className='good pop';fb.innerHTML='<b class="big">BENAR!</b>';fb.appendChild(document.createTextNode(PUJI[Math.random()*PUJI.length|0]+' '+q.e));}
+  else if(s.tries===1){b.classList.add('no');b.disabled=true;sfx('no');
+    fb.className='try pop';fb.innerHTML='<b class="big">COBA LAGI!</b>';fb.appendChild(document.createTextNode('Belum tepat. Petunjuk: '+q.h+' Kamu pasti bisa!'));}
+  else{s.done=true;s.ok=false;b.classList.add('no');lock();sfx('no');
+    fb.className='bad pop';fb.innerHTML='<b class="big">BELUM TEPAT</b>';fb.appendChild(document.createTextNode('Tidak apa-apa, ayo pelajari caranya. '+q.e));}
+}
+$('qNext').onclick=()=>{const s=QS;if(!s||!s.done)return;QS=null;sfx('click');scr(null);s.cb(s.ok,s.ok&&s.tries===1);};
+
+/* ---------------- selesai level, game over, laporan ---------------- */
+function fmtT(s){s=Math.round(s);return Math.floor(s/60)+' menit '+(s%60)+' detik';}
+function rows(tb,a){tb.innerHTML='';a.forEach(r=>{const tr=tb.insertRow();tr.insertCell().textContent=r[0];tr.insertCell().textContent=r[1];});}
+function levelDone(){
+  const n=G.n;G.score+=200;const stars=G.first>=G.asked&&G.wrong.length===0?3:G.first>=Math.ceil(G.asked*0.6)?2:1;
+  S.rec[n]={score:G.score,coins:G.coins,asked:G.asked,correct:G.correct,first:G.first,time:G.time,stars:stars};
+  S.wrong=S.wrong.filter(id=>id.split('-')[0]!==String(n)).concat(G.wrong);
+  if(S.gems.indexOf(n)<0)S.gems.push(n);S.unlocked=Math.max(S.unlocked,Math.min(5,n+1));
+  const t=totals();S.best=Math.max(S.best,t.score);save();
+  music('win');
+  $('wTitle').textContent=LV[n].gem.toUpperCase()+' DITEMUKAN!';$('wStars').textContent='★'.repeat(stars)+'☆'.repeat(3-stars);
+  rows($('wStat'),[['Skor level (termasuk bonus +200)',G.score],['Soal dijawab benar',G.correct+' dari '+G.asked],['Benar pada percobaan pertama',G.first],['Koin',G.coins],['Waktu',fmtT(G.time)],['Status','Level '+n+' selesai']]);
+  $('wNext').textContent=n===5?'LIHAT AKHIR CERITA':'LANJUT KE LEVEL BERIKUTNYA';
+  scr('win');
+}
+function gameOver(){
+  const t=totals();S.best=Math.max(S.best,t.score+G.score);save();music(null);
+  rows($('oStat'),[['Skor sementara',G.score],['Koin',G.coins],['Soal benar',G.correct+' dari '+G.asked],['Rekor terbaik',S.best]]);
+  scr('over');
+}
+function kategori(p){return p>=90?'MASTER NINJA':p>=80?'NINJA HEBAT':p>=70?'NINJA TANGGUH':p>=60?'NINJA PEMULA':'TERUS BERLATIH';}
+function showReport(note){
+  const t=totals(),pct=t.asked?Math.round(t.correct/t.asked*100):0;
+  $('rBadge').textContent=t.asked?kategori(pct):'BELUM ADA DATA';
+  rows($('rStat'),[['Nama pemain',S.name||'Ninja'],['Total skor',t.score],['Jumlah soal dijawab',t.asked],['Jawaban benar',t.correct],['Jawaban salah',t.asked-t.correct],['Benar pada percobaan pertama',t.first],['Persentase keberhasilan',pct+'%'],['Jumlah koin',t.coins],['Jumlah permata',S.gems.length+' dari 5'],['Level selesai',t.levels+' dari 5'],['Waktu bermain',fmtT(t.time)],['Rekor skor terbaik',S.best]]);
+  $('rNote').textContent=note||(S.wrong.length?('Ada '+S.wrong.length+' soal yang belum dikuasai. Tekan ULANGI LATIHAN untuk mencobanya lagi.'):(t.asked?'Semua soal sudah dikuasai. Hebat!':'Selesaikan satu level dulu untuk melihat hasil.'));
+  $('rPrac').style.display=S.wrong.length?'':'none';
+  mode='menu';scr('rep');
+}
+function practice(){
+  const ids=S.wrong.slice();let i=0,okc=0;mode='menu';
+  const next=()=>{if(i>=ids.length){save();showReport('Latihan selesai: '+okc+' dari '+ids.length+' soal berhasil diperbaiki.');return;}
+    const p=ids[i].split('-'),q=QB[p[0]][+p[1]];i++;
+    ask(q,'Latihan '+i+' dari '+ids.length,(ok)=>{if(ok){okc++;S.wrong=S.wrong.filter(x=>x!==q.id);}next();});};
+  next();
+}
+function showMap(){
+  mode='map';music('intro');const t=totals(),box=$('nodes');box.innerHTML='';
+  $('mapSub').textContent='Halo, '+(S.name||'Ninja')+'! Pilih wilayah yang terbuka untuk memulai misi.';
+  for(let n=1;n<=5;n++){const d=LV[n],r=S.rec[n],open=n<=S.unlocked,b=document.createElement('button');
+    b.className='node'+(open?'':' lock');b.style.background='linear-gradient(160deg,'+d.gc+',#1b2550)';
+    b.innerHTML='<div class="num">LEVEL '+n+'</div><div class="nmv"></div><div class="gem" style="background:'+d.gc+';color:'+d.gc+';opacity:'+(r?1:0.35)+'"></div><div class="stars">'+(r?'★'.repeat(r.stars)+'☆'.repeat(3-r.stars):'')+'</div><div class="st"></div>';
+    b.querySelector('.nmv').textContent=d.name;b.querySelector('.st').textContent=r?'Selesai · skor '+r.score:open?'Terbuka':'Terkunci';
+    b.onclick=()=>{auStart();if(open){sfx('click');startLevel(n);}else sfx('no');};box.appendChild(b);}
+  $('mapTot').textContent='Total skor: '+t.score+'   ·   Permata: '+S.gems.length+'/5   ·   Rekor: '+S.best;
+  scr('map');
+}
+function showMenu(){mode='menu';music('intro');$('nm').value=S.name||'';scr('menu');}
+function playStory(then){mode='story';storyI=0;music('intro');dialog(STORY,()=>{S.seen=true;save();then();});}
+function showEnding(){mode='end';endT=0;parts=[];music('win');scr('end');}
+
+/* ---------------- tombol ---------------- */
+document.querySelectorAll('[data-go="menu"]').forEach(b=>b.onclick=()=>{sfx('click');showMenu();});
+$('bStart').onclick=()=>{auStart();sfx('click');S.name=($('nm').value||'').trim().slice(0,20)||'Ninja';save();if(!S.seen)playStory(showMap);else showMap();};
+$('bHelp').onclick=()=>{auStart();sfx('click');scr('help');};
+$('bDev').onclick=()=>{auStart();sfx('click');scr('dev');};
+let setFrom='menu';
+function openSet(from){setFrom=from;const s=S.set;$('sMus').textContent=s.music?'ON':'OFF';$('sMus').classList.toggle('off',!s.music);$('sSfx').textContent=s.sfx?'ON':'OFF';$('sSfx').classList.toggle('off',!s.sfx);$('sMv').value=Math.round(s.mv*100);$('sSv').value=Math.round(s.sv*100);$('rst1').style.display=from==='menu'?'':'none';$('rst2').style.display='none';scr('set');}
+$('bSet').onclick=()=>{auStart();sfx('click');openSet('menu');};
+$('sMus').onclick=()=>{S.set.music=!S.set.music;auVol();save();openSet(setFrom);};
+$('sSfx').onclick=()=>{S.set.sfx=!S.set.sfx;auVol();save();openSet(setFrom);sfx('click');};
+$('sMv').oninput=e=>{S.set.mv=e.target.value/100;auVol();save();};
+$('sSv').oninput=e=>{S.set.sv=e.target.value/100;auVol();save();};
+$('sSv').onchange=()=>sfx('coin');
+$('bReset').onclick=()=>{$('rst1').style.display='none';$('rst2').style.display='';};
+$('bResetN').onclick=()=>openSet('menu');
+$('bResetY').onclick=()=>{const keep=S.set;S=defSave();S.set=keep;save();showMenu();};
+$('bSetBack').onclick=()=>{sfx('click');if(setFrom==='pause')scr('pause');else showMenu();};
+$('bRep').onclick=()=>{sfx('click');showReport();};
+$('bStory').onclick=()=>{sfx('click');playStory(showMap);};
+$('pauseBtn').onclick=()=>{if(mode==='play'&&!paused){sfx('click');scr('pause');}};
+$('pRes').onclick=()=>{sfx('click');scr(null);};
+$('pRetry').onclick=()=>{sfx('click');startLevel(G.n);};
+$('pSet').onclick=()=>{sfx('click');openSet('pause');};
+$('pMap').onclick=()=>{sfx('click');showMap();};
+$('wNext').onclick=()=>{sfx('click');if(G.n===5)showEnding();else startLevel(G.n+1);};
+$('wMap').onclick=()=>{sfx('click');showMap();};
+$('oRetry').onclick=()=>{sfx('click');startLevel(G.n);};
+$('oMap').onclick=()=>{sfx('click');showMap();};
+$('eAgain').onclick=()=>{sfx('click');showMap();};
+$('eRep').onclick=()=>{sfx('click');showReport();};
+$('rPrac').onclick=()=>{sfx('click');practice();};
+$('rMap').onclick=()=>{sfx('click');showMap();};
+$('act').onclick=()=>{K.useP=1;};
+
+/* ---------------- masukan ---------------- */
+addEventListener('keydown',e=>{
+  if(e.target&&e.target.tagName==='INPUT')return;auStart();const k=e.key.toLowerCase();
+  if(k==='a'||k==='arrowleft')K.left=1;if(k==='d'||k==='arrowright')K.right=1;
+  if(!e.repeat){if(k===' '||k==='arrowup'||k==='w')K.jumpP=1;if(k==='j')K.atkP=1;if(k==='k')K.spP=1;if(k==='e')K.useP=1;
+    if(k==='escape'&&mode==='play'&&!paused)scr('pause');
+    if(k==='enter'&&DQ)dlgNext(false);}
+  if(mode==='play'&&[' ','arrowup','arrowdown','arrowleft','arrowright'].indexOf(k)>=0)e.preventDefault();
+});
+addEventListener('keyup',e=>{const k=e.key.toLowerCase();if(k==='a'||k==='arrowleft')K.left=0;if(k==='d'||k==='arrowright')K.right=0;});
+addEventListener('blur',()=>{K.left=K.right=0;});
+addEventListener('pointerdown',auStart);
+addEventListener('touchstart',()=>document.body.classList.add('touch'),{passive:true});
+if(matchMedia('(pointer:coarse)').matches)document.body.classList.add('touch');
+document.querySelectorAll('#touch .tb').forEach(b=>{const k=b.dataset.k;
+  const dn=e=>{e.preventDefault();auStart();b.classList.add('dn');if(k==='left')K.left=1;else if(k==='right')K.right=1;else if(k==='jump')K.jumpP=1;else if(k==='atk')K.atkP=1;else K.spP=1;};
+  const up=e=>{e.preventDefault();b.classList.remove('dn');if(k==='left')K.left=0;else if(k==='right')K.right=0;};
+  b.addEventListener('pointerdown',dn);b.addEventListener('pointerup',up);b.addEventListener('pointercancel',up);b.addEventListener('pointerleave',up);b.addEventListener('contextmenu',e=>e.preventDefault());});
+
+/* ---------------- putaran utama ---------------- */
+let last=0;
+function frame(ts){
+  const dt=Math.min(0.033,((ts-last)/1000)||0);last=ts;T+=dt;
+  try{
+    if(mode==='play'&&G){if(!paused)update(dt);drawWorld();
+      const a=$('act'),nr=!paused&&!G.done&&G.near;a.classList.toggle('on',!!nr);
+      if(nr){const tx=nr.t==='chest'?'Buka peti permata (E)':nr.it.door?(G.n===5?'Buka gerbang (E)':'Buka pintu (E)'):'Buka '+G.L.d.item+' (E)';if(a.textContent!==tx)a.textContent=tx;}}
+    else if(mode==='story')drawStory();
+    else if(mode==='end')drawEnding(dt);
+    else drawTitle();
+  }catch(err){console.error(err);}
+  K.jumpP=K.atkP=K.spP=K.useP=0;
+  requestAnimationFrame(frame);
+}
+showMenu();
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
